@@ -1,11 +1,12 @@
 package org.irri.snpseek.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.irri.snpseek.DTO.VarietyDTO;
 import org.irri.snpseek.entity.Variety;
 import org.irri.snpseek.repository.VarietyRepository;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class VarietyService {
@@ -67,7 +68,7 @@ public class VarietyService {
 
     private VarietyDTO convertToDTO(Variety variety) {
         VarietyDTO dto = new VarietyDTO();
-        dto.setId(variety.getId());
+        dto.setId(variety.getVarietyId());
         dto.setName(variety.getName());
         dto.setSubpopulation(variety.getSubpopulation());
         dto.setCountry(variety.getCountry());

@@ -12,11 +12,11 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.example</groupId>
-    <artifactId>brapi-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>brapi-server</name>
-    <description>BrAPI Server Implementation</description>
+    <groupId>org.irri.snpseek</groupId>
+    <artifactId>snpseek-api</artifactId>
+    <version>0.0.1</version>
+    <name>snpseek API</name>
+    <description>Snpseek API Implementation</description>
     
     <properties>
         <java.version>17</java.version>
@@ -50,6 +50,11 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
+      <dependency>
+	    <groupId>cisd</groupId>
+	    <artifactId>jhdf5</artifactId>
+	    <version>19.04.0</version>
+	</dependency>
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,8 +67,8 @@
 	        <artifactId>postgresql</artifactId>
 	        <scope>runtime</scope>
 	    </dependency>
-    
-  		<!-- Keep H2 for development/testing (optional) -->
+
+		<!-- Keep H2 for development/testing (optional) -->
 	    <dependency>
 	        <groupId>com.h2database</groupId>
 	        <artifactId>h2</artifactId>
@@ -88,4 +93,10 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+	    <repository>
+	        <id>scijava.public</id>
+	        <url>https://maven.scijava.org/content/repositories/public/</url>
+	    </repository>
+	</repositories>
 </project>
