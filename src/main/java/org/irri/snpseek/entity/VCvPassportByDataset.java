@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -20,6 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 
 @Entity
+@IdClass(VCvPassportByDatasetId.class)
 @NamedQueries({
 		@NamedQuery(name = "findAllVCvPassportsDataset", query = "select myVCvPassport from VCvPassportByDataset myVCvPassport order by myVCvPassport.definition "),
 		@NamedQuery(name = "findAllVCvPassportsDatasetByDataset", query = "select myVCvPassport from VCvPassportByDataset myVCvPassport where myVCvPassport.dataset = ?1 order by myVCvPassport.definition "),

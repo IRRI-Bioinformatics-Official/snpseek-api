@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @NamedQueries({
 		@NamedQuery(name = "findAllVSnpSpliceacceptors", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor"),
 		@NamedQuery(name = "findVSnpSpliceacceptorByChr", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.chr = ?1"),
-		@NamedQuery(name = "findVSnpSpliceacceptorByChrContaining", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.chr like ?1"),
+		@NamedQuery(name = "findVSnpSpliceacceptorByChrContaining", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.chr = ?1"),
 		@NamedQuery(name = "findVSnpSpliceacceptorByPosition", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.position = ?1"),
 		@NamedQuery(name = "findVSnpSpliceacceptorByChrPositionBetween", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.chr=?1 and myVSnpSpliceacceptor.position-1 between ?2 and ?3"),
 		@NamedQuery(name = "findVSnpSpliceacceptorByChrPositionIn", query = "select myVSnpSpliceacceptor from VSnpSpliceacceptor myVSnpSpliceacceptor where myVSnpSpliceacceptor.chr=?1 and myVSnpSpliceacceptor.position-1 in (?2)"),

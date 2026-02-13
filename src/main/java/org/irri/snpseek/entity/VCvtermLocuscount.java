@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
 /**
  */
 // @IdClass(org.irri.iric.portal.chado.domain.VCvtermLocuscountPK.class)
-@IdClass(VCvtermLocuscountPK.class)
+//@IdClass(VCvtermLocuscountPK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVCvtermLocuscounts", query = "select myVCvtermLocuscount from VCvtermLocuscount myVCvtermLocuscount"),

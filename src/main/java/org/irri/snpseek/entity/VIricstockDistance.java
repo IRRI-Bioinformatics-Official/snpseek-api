@@ -21,7 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VIricstockDistancePK.class)
+//@IdClass(VIricstockDistancePK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVIricstockDistances", query = "select myVIricstockDistance from VIricstockDistance myVIricstockDistance where myVIricstockDistance.var1 <= myVIricstockDistance.var2 "),

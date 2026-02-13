@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VIricstockPhenotypeQuanvalPK.class)
+//@IdClass(VIricstockPhenotypeQuanvalPK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVIricstockPhenotypeQuanvals", query = "select myVIricstockPhenotypeQuanval from VIricstockPhenotypeQuanval myVIricstockPhenotypeQuanval"),

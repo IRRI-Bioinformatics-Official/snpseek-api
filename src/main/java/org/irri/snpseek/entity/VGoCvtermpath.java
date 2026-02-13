@@ -21,7 +21,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VGoCvtermpathPK.class)
+//@IdClass(VGoCvtermpathPK.class)
 @Entity(name = "VGoCvtermpath")
 @NamedQueries({
 		@NamedQuery(name = "findAllVGoCvtermpaths", query = "select myVGoCvtermpath from VGoCvtermpath myVGoCvtermpath"),

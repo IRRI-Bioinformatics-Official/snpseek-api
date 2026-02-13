@@ -410,16 +410,16 @@ public class VIricstocksByPhenotype implements Serializable{ // Serializable, Va
 	 * }
 	 */
 
-	public int compareTo(Object o) {
-		
-		int ret = getName().compareTo(((Variety) o).getName());
-		if (ret == 0)
-			ret = getVarietyId().compareTo(((Variety) o).getVarietyId());
-		if (ret == 0)
-			ret = getDataset().compareTo(((Variety) o).getDataset());
-
-		return ret;
-	}
+//	public int compareTo(Object o) {
+//		
+//		int ret = getName().compareTo(((Variety) o).getName());
+//		if (ret == 0)
+//			ret = getVarietyId().compareTo(((Variety) o).getVarietyId());
+//		if (ret == 0)
+//			ret = getDataset().compareTo(((Variety) o).getDataset());
+//
+//		return ret;
+//	}
 
 	public String printFields(String delimiter) {
 		

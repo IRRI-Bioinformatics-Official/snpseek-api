@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VSnpRefposindexChrposPK.class)
+//@IdClass(VSnpRefposindexChrposPK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVSnpRefposindexs", query = "select myVSnpRefposindex from VSnpRefposindex myVSnpRefposindex  order by myVSnpRefposindex.chromosome, myVSnpRefposindex.position"),

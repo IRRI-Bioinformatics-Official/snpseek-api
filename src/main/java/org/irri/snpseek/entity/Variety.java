@@ -1,242 +1,196 @@
 package org.irri.snpseek.entity;
 
+import jakarta.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
-@Table(name = "v_variety")
-public class Variety {
-    
+@Table(name = "stock")
+public class Variety implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "variety_id")
-    private BigDecimal varietyId;
-    
-    @Column(name = "stock_sample_id")
-    private BigDecimal stockSampleId;
-    
-    @Column(name = "name")
+    @Column(name = "stock_id")
+    private Long stockId;
+
+    @Column(name = "dbxref_id")
+    private Long dbxrefId;
+
+    @Column(name = "organism_id")
+    private Long organismId;
+
+    @Column(name = "name", length = 255)
     private String name;
-    
-    @Column(name = "iris_id")
-    private String irisId;
-    
-    @Column(name = "country")
-    private String country;
-    
-    @Column(name = "subpopulation")
-    private String subpopulation;
-    
-    @Column(name = "accession")
-    private String accession;
-    
-    @Column(name = "box_code")
-    private String boxCode;
-    
-    @Column(name = "dataset")
-    private String dataset;
-    
-    // Constructors
+
+    @Column(name = "uniquename", length = 255)
+    private String uniquename;
+
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
+
+    @Column(name = "type_id")
+    private Long typeId;
+
+    @Column(name = "is_obsolete")
+    private Boolean isObsolete;
+
+    @Column(name = "stock_geolocation_id")
+    private Long stockGeolocationId;
+
+    @Column(name = "tmp_oldstock_id")
+    private Long tmpOldstockId;
+
+    // No-arg constructor for JPA
     public Variety() {
     }
-    
-    public Variety(BigDecimal varietyId, String name, String country) {
-        this.varietyId = varietyId;
+
+    // Convenience constructor (without PK)
+    public Variety(Long dbxrefId, Long organismId, String name, String uniquename, String description,
+                   Long typeId, Boolean isObsolete, Long stockGeolocationId, Long tmpOldstockId) {
+        this.dbxrefId = dbxrefId;
+        this.organismId = organismId;
         this.name = name;
-        this.country = country;
-    }
-    
-    // Getters
-    /**
-     * Variety Id
-     *
-     * @return
-     */
-    public BigDecimal getVarietyId() {
-        return varietyId;
+        this.uniquename = uniquename;
+        this.description = description;
+        this.typeId = typeId;
+        this.isObsolete = isObsolete;
+        this.stockGeolocationId = stockGeolocationId;
+        this.tmpOldstockId = tmpOldstockId;
     }
 
-    /**
-     * Stock Sample Id
-     *
-     * @return
-     */
-    public BigDecimal getStockSampleId() {
-        return stockSampleId;
+    // Full constructor
+    public Variety(Long stockId, Long dbxrefId, Long organismId, String name, String uniquename,
+                   String description, Long typeId, Boolean isObsolete, Long stockGeolocationId,
+                   Long tmpOldstockId) {
+        this.stockId = stockId;
+        this.dbxrefId = dbxrefId;
+        this.organismId = organismId;
+        this.name = name;
+        this.uniquename = uniquename;
+        this.description = description;
+        this.typeId = typeId;
+        this.isObsolete = isObsolete;
+        this.stockGeolocationId = stockGeolocationId;
+        this.tmpOldstockId = tmpOldstockId;
     }
 
-    /**
-     * Variety name from source
-     *
-     * @return
-     */
+    public Long getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
+    }
+
+    public Long getDbxrefId() {
+        return dbxrefId;
+    }
+
+    public void setDbxrefId(Long dbxrefId) {
+        this.dbxrefId = dbxrefId;
+    }
+
+    public Long getOrganismId() {
+        return organismId;
+    }
+
+    public void setOrganismId(Long organismId) {
+        this.organismId = organismId;
+    }
+
     public String getName() {
         return name;
     }
 
-    /**
-     * IRIS Unique ID
-     *
-     * @return
-     */
-    public String getIrisId() {
-        return irisId;
-    }
-
-    /**
-     * Country of origin
-     *
-     * @return
-     */
-    public String getCountry() {
-        return country;
-    }
-
-    /**
-     * Subpopulation (indica, japonica, aus, etc.)
-     *
-     * @return
-     */
-    public String getSubpopulation() {
-        return subpopulation;
-    }
-
-    /**
-     * Accession, from whatever source
-     *
-     * @return
-     */
-    public String getAccession() {
-        return accession;
-    }
-
-    /**
-     * Box code
-     *
-     * @return
-     */
-    public String getBoxCode() {
-        return boxCode;
-    }
-
-    /**
-     * Dataset, defined in VarietyFacade.DATASET_*
-     *
-     * @return
-     */
-    public String getDataset() {
-        return dataset;
-    }
-
-    // Setters
-    public void setVarietyId(BigDecimal varietyId) {
-        this.varietyId = varietyId;
-    }
-
-    public void setStockSampleId(BigDecimal stockSampleId) {
-        this.stockSampleId = stockSampleId;
-    }
-
-    /**
-     * Used for query by example
-     *
-     * @param name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setIrisId(String irisId) {
-        this.irisId = irisId;
+    public String getUniquename() {
+        return uniquename;
     }
 
-    /**
-     * Used for query by example
-     *
-     * @param country
-     */
-    public void setCountry(String country) {
-        this.country = country;
+    public void setUniquename(String uniquename) {
+        this.uniquename = uniquename;
     }
 
-    /**
-     * Used for query by example
-     *
-     * @param subpopulation
-     */
-    public void setSubpopulation(String subpopulation) {
-        this.subpopulation = subpopulation;
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Used for query by example
-     *
-     * @param accession
-     */
-    public void setAccession(String accession) {
-        this.accession = accession;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setBoxCode(String boxCode) {
-        this.boxCode = boxCode;
+    public Long getTypeId() {
+        return typeId;
     }
 
-    public void setDataset(String dataset) {
-        this.dataset = dataset;
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
 
-    // Utility methods
-    /**
-     * Print fields using delimiter
-     *
-     * @param delimiter
-     * @return
-     */
-    public String printFields(String delimiter) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(varietyId).append(delimiter)
-          .append(stockSampleId).append(delimiter)
-          .append(name).append(delimiter)
-          .append(irisId).append(delimiter)
-          .append(country).append(delimiter)
-          .append(subpopulation).append(delimiter)
-          .append(accession).append(delimiter)
-          .append(boxCode).append(delimiter)
-          .append(dataset);
-        return sb.toString();
+    public Boolean getIsObsolete() {
+        return isObsolete;
     }
-    
-    @Override
-    public String toString() {
-        return "Variety{" +
-                "varietyId=" + varietyId +
-                ", stockSampleId=" + stockSampleId +
-                ", name='" + name + '\'' +
-                ", irisId='" + irisId + '\'' +
-                ", country='" + country + '\'' +
-                ", subpopulation='" + subpopulation + '\'' +
-                ", accession='" + accession + '\'' +
-                ", boxCode='" + boxCode + '\'' +
-                ", dataset='" + dataset + '\'' +
-                '}';
+
+    public void setIsObsolete(Boolean isObsolete) {
+        this.isObsolete = isObsolete;
     }
-    
+
+    public Long getStockGeolocationId() {
+        return stockGeolocationId;
+    }
+
+    public void setStockGeolocationId(Long stockGeolocationId) {
+        this.stockGeolocationId = stockGeolocationId;
+    }
+
+    public Long getTmpOldstockId() {
+        return tmpOldstockId;
+    }
+
+    public void setTmpOldstockId(Long tmpOldstockId) {
+        this.tmpOldstockId = tmpOldstockId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Variety)) return false;
         Variety variety = (Variety) o;
-        return varietyId != null && varietyId.equals(variety.varietyId);
+        return Objects.equals(stockId, variety.stockId);
     }
-    
+
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hashCode(stockId);
     }
+
+    @Override
+    public String toString() {
+        return "Variety{" +
+                "stockId=" + stockId +
+                ", dbxrefId=" + dbxrefId +
+                ", organismId=" + organismId +
+                ", name='" + name + '\'' +
+                ", uniquename='" + uniquename + '\'' +
+                ", description='" + description + '\'' +
+                ", typeId=" + typeId +
+                ", isObsolete=" + isObsolete +
+                ", stockGeolocationId=" + stockGeolocationId +
+                ", tmpOldstockId=" + tmpOldstockId +
+                '}';
+    }
+
+	public BigDecimal getVarietyId() {
+		return this.stockId != null ? new BigDecimal(this.stockId) : null;
+	}
+
+	public Object getDataset() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -18,7 +18,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(org.irri.snpseek.variety.domain.object.VOracleSessionsPK.class)
+//@IdClass(org.irri.snpseek.variety.domain.object.VOracleSessionsPK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVOracleSessionss", query = "select myVOracleSessions from VOracleSessions myVOracleSessions"),

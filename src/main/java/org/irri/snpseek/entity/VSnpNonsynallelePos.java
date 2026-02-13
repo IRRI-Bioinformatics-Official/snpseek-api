@@ -23,7 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VSnpNonsynallelePosPK.class)
+//@IdClass(VSnpNonsynallelePosPK.class)
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "findAllVSnpNonsynallelePoss", query = "select myVSnpNonsynallelePos from VSnpNonsynallelePos myVSnpNonsynallelePos"),

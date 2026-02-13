@@ -15,7 +15,7 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI snpSeekOpenAPI() {
         Server server = new Server();
-        server.setUrl("http://localhost:5555/api");
+        server.setUrl("http://localhost:5555");
         server.setDescription("SNPSeek API Server");
 
         Contact contact = new Contact();

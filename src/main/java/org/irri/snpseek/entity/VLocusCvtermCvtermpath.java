@@ -22,7 +22,7 @@ import jakarta.xml.bind.annotation.XmlType;
 
 /**
  */
-@IdClass(VLocusCvtermCvtermpathPK.class)
+//@IdClass(VLocusCvtermCvtermpathPK.class)
 @Entity(name = "VLocusCvtermCvtermpath")
 @NamedQueries({
 		@NamedQuery(name = "findAllVLocusCvtermCvtermpaths", query = "select myVLocusCvtermCvtermpath from VLocusCvtermCvtermpath myVLocusCvtermCvtermpath"),

@@ -57,7 +57,7 @@ public class VCoPhenotype implements Serializable{
 	/**
 	 */
 
-	@Column(name = "VARIABLE_NAME", length = 1024)
+	@Column(name = "TRAIT_NAME", length = 1024)
 	@Basic(fetch = FetchType.EAGER)
 	@XmlElement
 	String trait;
@@ -85,7 +85,7 @@ public class VCoPhenotype implements Serializable{
 	/**
 	 */
 
-	@Column(name = "VARIABLE_NAME", length = 1024)
+	@Column(name = "SCALE_NAME", length = 1024)
 	@Basic(fetch = FetchType.EAGER)
 	@XmlElement
 	String scale;

@@ -26,7 +26,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @NamedQueries({
 		@NamedQuery(name = "findAllVSnpSplicedonors", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor"),
 		@NamedQuery(name = "findVSnpSplicedonorByChr", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.chr = ?1"),
-		@NamedQuery(name = "findVSnpSplicedonorByChrContaining", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.chr like ?1"),
+		@NamedQuery(name = "findVSnpSplicedonorByChrContaining", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.chr = ?1"),
 		@NamedQuery(name = "findVSnpSplicedonorByPosition", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.position = ?1"),
 		@NamedQuery(name = "findVSnpSplicedonorByChrPositionBetween", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.chr=?1 and myVSnpSplicedonor.position+1 between ?2 and  ?3"),
 		@NamedQuery(name = "findVSnpSplicedonorByChrPositionIn", query = "select myVSnpSplicedonor from VSnpSplicedonor myVSnpSplicedonor where myVSnpSplicedonor.chr=?1 and myVSnpSplicedonor.position+1 in (?2)"),

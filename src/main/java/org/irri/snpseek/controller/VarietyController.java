@@ -26,55 +26,37 @@ public class VarietyController {
     }
 
     @GetMapping
-    @Operation(summary = "All varieties", description = "Gets all variety objects")
+    @Operation(summary = "All varieties", description = "Gets all varieties")
     public ResponseEntity<List<VarietyDTO>> getVarieties() {
         return ResponseEntity.ok(varietyService.getAllVarieties());
     }
     
    
     @GetMapping("/{id}")
-    @Operation(summary = "Variety details", description = "Gets variety details for varid")
+    @Operation(summary = "Variety details", description = "Gets variety details using variety id")
     public ResponseEntity<VarietyDTO> getVarietiesById(
             @Parameter(description = "Variety ID") @PathVariable Long id) {
-        return ResponseEntity.ok(varietyService.getVarietyById(id));
+    	return ResponseEntity.ok(varietyService.getVarietyById(id.intValue()));
+    }
+    
+    @GetMapping("/organismId/{id}")
+    @Operation(summary = "Variety List", description = "Gets List of Varieties by organism id. e.g. 9 for Japonica Nipponbare")
+    public ResponseEntity<List<VarietyDTO>> getVarietiesByOrganismId(
+            @Parameter(description = "Organism ID") @PathVariable Long id) {
+    	System.out.println("Getting variety with Organism ID: " + id);
+        return ResponseEntity.ok(varietyService.getVarietiesByOrganismId(id.intValue()));
     }
 
-    @GetMapping("/subpopulation/{subpop}")
-    @Operation(summary = "Varieties in subpopulation", description = "Gets varieties in the subpopulation")
-    public ResponseEntity<List<VarietyDTO>> getVarietiesBySubpopulation(
-            @Parameter(description = "Subpopulation name") @PathVariable String subpop) {
-        return ResponseEntity.ok(varietyService.getVarietiesBySubpopulation(subpop));
-    }
-
-    @GetMapping("/subpopulation")
-    @Operation(summary = "Subpopulations", description = "Gets all subpopulations")
-    public ResponseEntity<List<String>> getVarietiesSubpopulation() {
-        return ResponseEntity.ok(varietyService.getAllSubpopulations());
-    }
-
-    @GetMapping("/country/{country}")
-    @Operation(summary = "Varieties from country", description = "Gets all varieties from country")
-    public ResponseEntity<List<VarietyDTO>> getVarietiesByCountry(
-            @Parameter(description = "Country name") @PathVariable String country) {
-        return ResponseEntity.ok(varietyService.getVarietiesByCountry(country));
-    }
-
-    @GetMapping("/country")
-    @Operation(summary = "Countries", description = "Gets all countries")
-    public ResponseEntity<List<String>> getVarietiesCountry() {
-        return ResponseEntity.ok(varietyService.getAllCountries());
-    }
-
-    @GetMapping("/name")
-    @Operation(summary = "Variety names", description = "Gets all variety names")
-    public ResponseEntity<List<String>> getVarietiesNames() {
-        return ResponseEntity.ok(varietyService.getAllVarietyNames());
-    }
-
-    @GetMapping("/namelike/{name}")
-    @Operation(summary = "Variety names like", description = "Gets all varieties with names using wildcard *name*")
-    public ResponseEntity<List<VarietyDTO>> getVarietiesNameLike(
-            @Parameter(description = "Name pattern") @PathVariable String name) {
-        return ResponseEntity.ok(varietyService.getVarietiesByNameLike(name));
-    }
+//    @GetMapping("/name")
+//    @Operation(summary = "Variety details", description = "Gets list of variety names")
+//    public ResponseEntity<List<String>> getVarietiesNames() {
+//        return ResponseEntity.ok(varietyService.getAllVarietyNames());
+//    }
+//
+//    @GetMapping("/namelike/{name}")
+//    @Operation(summary = "Variety names like", description = "Gets all varieties with names using wildcard *name*")
+//    public ResponseEntity<List<VarietyDTO>> getVarietiesNameLike(
+//            @Parameter(description = "Name pattern") @PathVariable String name) {
+//        return ResponseEntity.ok(varietyService.getVarietiesByNameLike(name));
+//    }
 }

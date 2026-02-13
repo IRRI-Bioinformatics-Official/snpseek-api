@@ -10,68 +10,53 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VarietyService {
-    private final VarietyRepository varietyRepository;
+	private final VarietyRepository varietyRepository;
 
-    public VarietyService(VarietyRepository varietyRepository) {
-        this.varietyRepository = varietyRepository;
-    }
+	public VarietyService(VarietyRepository varietyRepository) {
+		this.varietyRepository = varietyRepository;
+	}
 
-    public List<VarietyDTO> getAllVarieties() {
-        return varietyRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
+	public List<VarietyDTO> getAllVarieties() {
+		return varietyRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+	}
 
-    public VarietyDTO getVarietyById(Long id) {
-        Variety variety = varietyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Variety not found: " + id));
-        return convertToDTO(variety);
-    }
+	public VarietyDTO getVarietyById(Integer id) {
+		Variety variety = varietyRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Variety not found with id: " + id));
 
-    public List<VarietyDTO> getVarietiesBySubpopulation(String subpop) {
-        return varietyRepository.findBySubpopulation(subpop).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
+		// Convert Entity to DTO (assuming you have a mapper or constructor)
+		return convertToDTO(variety);
+	}
 
-    public List<VarietyDTO> getVarietiesByCountry(String country) {
-        return varietyRepository.findByCountry(country).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
+	
+	
 
-    public List<String> getAllSubpopulations() {
-        return varietyRepository.findAll().stream()
-                .map(Variety::getSubpopulation)
-                .distinct()
-                .collect(Collectors.toList());
-    }
+	public List<String> getAllVarietyNames() {
+		return varietyRepository.findAll().stream().map(Variety::getName).collect(Collectors.toList());
+	}
 
-    public List<String> getAllCountries() {
-        return varietyRepository.findAll().stream()
-                .map(Variety::getCountry)
-                .distinct()
-                .collect(Collectors.toList());
-    }
+	public List<VarietyDTO> getVarietiesByNameLike(String name) {
+		return varietyRepository.findByNameContainingIgnoreCase(name).stream().map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
 
-    public List<String> getAllVarietyNames() {
-        return varietyRepository.findAll().stream()
-                .map(Variety::getName)
-                .collect(Collectors.toList());
-    }
-
-    public List<VarietyDTO> getVarietiesByNameLike(String name) {
-        return varietyRepository.findByNameContainingIgnoreCase(name).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    private VarietyDTO convertToDTO(Variety variety) {
-        VarietyDTO dto = new VarietyDTO();
-        dto.setId(variety.getVarietyId());
-        dto.setName(variety.getName());
-        dto.setSubpopulation(variety.getSubpopulation());
-        dto.setCountry(variety.getCountry());
-        return dto;
-    }
+	public List<VarietyDTO> getVarietiesByOrganismId(Integer organismId) {
+		return varietyRepository.findByOrganismId(organismId).stream().map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public List<VarietyDTO> getVarietiesByOrganismId(Integer organismId, String name) {
+		return varietyRepository.findByOrganismId(organismId).stream()
+				.filter(variety -> variety.getName() != null && variety.getName().toLowerCase().contains(name.toLowerCase()))
+				.map(this::convertToDTO)
+				.collect(Collectors.toList());
+	}
+	
+	private VarietyDTO convertToDTO(Variety variety) {
+		VarietyDTO dto = new VarietyDTO();
+		dto.setVarietyId(variety.getVarietyId());
+		dto.setName(variety.getName());
+	
+		return dto;
+	}
 }
