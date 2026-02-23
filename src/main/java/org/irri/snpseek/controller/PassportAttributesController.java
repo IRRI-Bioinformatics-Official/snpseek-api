@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/passport-attributes")
-@Tag(name = "PassportAttributes", description = "APIs to query passport CV term metadata by dataset")
+@Tag(name = "PassportAttributes", description = "API for controlled vocabulary terms used in germplasm passport data")
 public class PassportAttributesController {
     private final PassportAttributesService passportAttributesService;
 

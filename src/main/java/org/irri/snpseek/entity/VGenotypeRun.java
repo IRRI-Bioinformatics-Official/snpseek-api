@@ -1,4 +1,3 @@
-
 package org.irri.snpseek.entity;
 
 import java.io.Serializable;
@@ -169,7 +168,7 @@ public class VGenotypeRun implements Serializable{
 	@Column(name = "common_name")
 	@Basic(fetch = FetchType.EAGER)
 	@XmlElement
-	String common_name;
+	String commonname;
 
 	@Column(name = "ds_description")
 	@Basic(fetch = FetchType.EAGER)
@@ -370,7 +369,7 @@ public class VGenotypeRun implements Serializable{
 		buffer.append("datasetId=[").append(datasetId).append("] ");
 		buffer.append("dataset=[").append(dataset).append("] ");
 		buffer.append("dsDescription=[").append(dsDescription).append("] ");
-		buffer.append("common_name=[").append(common_name).append("] ");
+		buffer.append("common_name=[").append(commonname).append("] ");
 
 		return buffer.toString();
 	}
@@ -408,7 +407,11 @@ public class VGenotypeRun implements Serializable{
 	
 	public String getCommonname() {
 		// TODO Auto-generated method stub
-		return common_name;
+		return commonname;
+	}
+
+	public void setCommonname(String commonname) {
+		this.commonname = commonname;
 	}
 
 }

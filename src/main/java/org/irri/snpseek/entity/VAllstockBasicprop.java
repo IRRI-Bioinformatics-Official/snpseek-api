@@ -257,7 +257,7 @@ public class VAllstockBasicprop implements Serializable{
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof Variety))
+		if (!(obj instanceof Stock))
 			return false;
 		VAllstockBasicprop equalCheck = (VAllstockBasicprop) obj;
 		if ((allStockIdId == null && equalCheck.allStockIdId != null)
@@ -305,9 +305,9 @@ public class VAllstockBasicprop implements Serializable{
 
 	public int compareTo(Object o) {
 
-		int ret = getName().compareTo(((Variety) o).getName());
+		int ret = getName().compareTo(((Stock) o).getName());
 		if (ret == 0)
-			ret = getVarietyId().compareTo(((Variety) o).getVarietyId());
+			ret = getVarietyId().compareTo(((Stock) o).getVarietyId());
 
 		return ret;
 	}

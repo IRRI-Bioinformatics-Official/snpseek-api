@@ -461,7 +461,7 @@ public class VIricstocksByPtoco implements Serializable{
 
 	public int compareTo(Object arg0) {
 		
-		Variety v = (Variety) arg0;
+		Stock v = (Stock) arg0;
 		return getVarietyId().compareTo(v.getVarietyId());
 	}
 

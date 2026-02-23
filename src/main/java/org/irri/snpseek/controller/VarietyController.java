@@ -1,62 +1,147 @@
 package org.irri.snpseek.controller;
 
-import java.util.List;
-
-import org.irri.snpseek.DTO.VarietyDTO;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import org.irri.snpseek.service.VarietyService;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/variety")
-@Tag(name = "Variety", description = "API's to query variety related data")
+@Tag(name = "Variety", description = "API for genotyping experiment runs and variant calling datasets")
 public class VarietyController {
-    private final VarietyService varietyService;
-
-    public VarietyController(VarietyService varietyService) {
-        this.varietyService = varietyService;
-    }
 
     @GetMapping
-    @Operation(summary = "All varieties", description = "Gets all varieties")
-    public ResponseEntity<List<VarietyDTO>> getVarieties() {
-        return ResponseEntity.ok(varietyService.getAllVarieties());
-    }
-    
-   
-    @GetMapping("/{id}")
-    @Operation(summary = "Variety details", description = "Gets variety details using variety id")
-    public ResponseEntity<VarietyDTO> getVarietiesById(
-            @Parameter(description = "Variety ID") @PathVariable Long id) {
-    	return ResponseEntity.ok(varietyService.getVarietyById(id.intValue()));
-    }
-    
-    @GetMapping("/organismId/{id}")
-    @Operation(summary = "Variety List", description = "Gets List of Varieties by organism id. e.g. 9 for Japonica Nipponbare")
-    public ResponseEntity<List<VarietyDTO>> getVarietiesByOrganismId(
-            @Parameter(description = "Organism ID") @PathVariable Long id) {
-    	System.out.println("Getting variety with Organism ID: " + id);
-        return ResponseEntity.ok(varietyService.getVarietiesByOrganismId(id.intValue()));
+    @Operation(summary = "All varieties", description = "Get all varieties")
+    public ResponseEntity<List<Object>> getVarietyAll() {
+        return ResponseEntity.ok(Collections.emptyList());
     }
 
-//    @GetMapping("/name")
-//    @Operation(summary = "Variety details", description = "Gets list of variety names")
-//    public ResponseEntity<List<String>> getVarietiesNames() {
-//        return ResponseEntity.ok(varietyService.getAllVarietyNames());
-//    }
-//
-//    @GetMapping("/namelike/{name}")
-//    @Operation(summary = "Variety names like", description = "Gets all varieties with names using wildcard *name*")
-//    public ResponseEntity<List<VarietyDTO>> getVarietiesNameLike(
-//            @Parameter(description = "Name pattern") @PathVariable String name) {
-//        return ResponseEntity.ok(varietyService.getVarietiesByNameLike(name));
-//    }
+    @GetMapping("/{id}")
+    @Operation(summary = "Variety details", description = "Get variety details by id")
+    public ResponseEntity<Object> getVarietyById(@PathVariable Long id) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/subpopulation/{subpop}")
+    @Operation(summary = "Varieties in subpopulation", description = "Get varieties in a subpopulation")
+    public ResponseEntity<List<Object>> getVarietiesBySubpopulation(@PathVariable String subpop,
+            @RequestParam(name = "limit", required = false, defaultValue = "0") int limit) {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/subpopulation")
+    @Operation(summary = "Subpopulations", description = "Get list of subpopulations")
+    public ResponseEntity<List<String>> getVarietySubpopulations() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/country/{country}")
+    @Operation(summary = "Varieties from country", description = "Get varieties originating from a country")
+    public ResponseEntity<List<Object>> getVarietiesByCountry(@PathVariable String country,
+            @RequestParam(name = "limit", required = false, defaultValue = "0") int limit) {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/country")
+    @Operation(summary = "Countries", description = "Get list of countries")
+    public ResponseEntity<List<String>> getVarietyCountries() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/name")
+    @Operation(summary = "Variety names", description = "Get all variety names")
+    public ResponseEntity<List<String>> getVarietyNames() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/namelike/{name}")
+    @Operation(summary = "Variety names like", description = "Get variety names matching pattern")
+    public ResponseEntity<List<String>> getVarietyNameLike(@PathVariable String name) {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    // Phenotype endpoints (mirrors PhenotypeController routes)
+    @GetMapping("/phenotypes")
+    @Operation(summary = "All phenotypes", description = "Get all phenotype names and IDs")
+    public ResponseEntity<List<Object>> getPhenotypes() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/phenotypes/{phenid}")
+    @Operation(summary = "Phenotype values", description = "Get phenotype values for all varieties")
+    public ResponseEntity<Map<String, String>> getPhenotypeForAllVarieties(@PathVariable String phenid) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/{varid}/phenotypes")
+    @Operation(summary = "Variety phenotypes", description = "Get all phenotypes and values for a variety")
+    public ResponseEntity<Map<String, String>> getVarietyPhenotypes(@PathVariable Long varid) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/{varid}/phenotypes/{phenid}")
+    @Operation(summary = "Variety phenotype value", description = "Get phenotype value for a variety")
+    public ResponseEntity<String> getVarietyPhenotype(@PathVariable Long varid, @PathVariable String phenid) {
+        return ResponseEntity.ok("");
+    }
+
+    @GetMapping("/all/phenotypes/{phenid}")
+    @Operation(summary = "Phenotype values for all varieties", description = "Get phenotype values for all varieties")
+    public ResponseEntity<Map<String, String>> getAllVarietyPhenotype(@PathVariable String phenid) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    // COterms / ontology endpoints
+    @GetMapping("/COterms/trait")
+    @Operation(summary = "All rice ontologies", description = "Get rice ontology terms (traits)")
+    public ResponseEntity<List<Object>> getCOtermsTrait() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/COterms/trait/{coTerm}")
+    @Operation(summary = "Ontology terms", description = "Get ontology term details")
+    public ResponseEntity<Object> getCOterm(@PathVariable String coTerm) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/{varid}/COterms/trait/{coTerm}")
+    @Operation(summary = "CO Term for variety", description = "Get CO term value for a specific variety")
+    public ResponseEntity<Object> getVarietyCOterm(@PathVariable Long varid, @PathVariable String coTerm) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/all/COterms/trait/{coTerm}")
+    @Operation(summary = "CO Term for all varieties", description = "Get CO term for all varieties")
+    public ResponseEntity<Map<String, Object>> getAllVarietyCOterm(@PathVariable String coTerm) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    // Passport endpoints
+    @GetMapping("/passports")
+    @Operation(summary = "All passports", description = "Get all passport fields and IDs")
+    public ResponseEntity<List<String>> getPassports() {
+        return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/{varid}/passports")
+    @Operation(summary = "Variety passports", description = "Get passport data for a variety")
+    public ResponseEntity<Map<String, String>> getVarietyPassports(@PathVariable Long varid) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/passports/{passid}")
+    @Operation(summary = "Passport data", description = "Get passport data by passport id")
+    public ResponseEntity<Map<String, String>> getPassportById(@PathVariable String passid) {
+        return ResponseEntity.ok(Collections.emptyMap());
+    }
+
 }

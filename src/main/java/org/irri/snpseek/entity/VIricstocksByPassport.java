@@ -295,10 +295,10 @@ public class VIricstocksByPassport implements Serializable{
 	public boolean equals(Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof Variety)) // VIricstockBasicprop))
+		if (!(obj instanceof Stock)) // VIricstockBasicprop))
 			return false;
 		// VIricstockBasicprop equalCheck = (VIricstockBasicprop) obj;
-		Variety equalCheck = (Variety) obj;
+		Stock equalCheck = (Stock) obj;
 
 		// return iricStockId.equals(equalCheck.getIricStockId());
 

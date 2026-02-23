@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "stock")
-public class Variety implements Serializable {
+public class Stock implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -43,11 +43,11 @@ public class Variety implements Serializable {
     private Long tmpOldstockId;
 
     // No-arg constructor for JPA
-    public Variety() {
+    public Stock() {
     }
 
     // Convenience constructor (without PK)
-    public Variety(Long dbxrefId, Long organismId, String name, String uniquename, String description,
+    public Stock(Long dbxrefId, Long organismId, String name, String uniquename, String description,
                    Long typeId, Boolean isObsolete, Long stockGeolocationId, Long tmpOldstockId) {
         this.dbxrefId = dbxrefId;
         this.organismId = organismId;
@@ -61,7 +61,7 @@ public class Variety implements Serializable {
     }
 
     // Full constructor
-    public Variety(Long stockId, Long dbxrefId, Long organismId, String name, String uniquename,
+    public Stock(Long stockId, Long dbxrefId, Long organismId, String name, String uniquename,
                    String description, Long typeId, Boolean isObsolete, Long stockGeolocationId,
                    Long tmpOldstockId) {
         this.stockId = stockId;
@@ -159,8 +159,8 @@ public class Variety implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Variety)) return false;
-        Variety variety = (Variety) o;
+        if (!(o instanceof Stock)) return false;
+        Stock variety = (Stock) o;
         return Objects.equals(stockId, variety.stockId);
     }
 

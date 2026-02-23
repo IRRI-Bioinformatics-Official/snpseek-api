@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import org.irri.snpseek.DTO.GenotypeRunDTO;
 import org.irri.snpseek.entity.VGenotypeRun;
 import org.irri.snpseek.repository.GenotypeRunRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GenotypeRunService {
@@ -30,6 +33,76 @@ public class GenotypeRunService {
 
     public List<GenotypeRunDTO> findByVariantType(String variantType) {
         return repository.findByVariantType(variantType).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    
+    public List<GenotypeRunDTO> findByCommonName(String organismName) {
+        return repository.findByCommonnameContainingIgnoreCase(organismName).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    // Use case 1: genotype runs by organism (common_name) and dataset, with optional variantType filter
+    public List<GenotypeRunDTO> findByCommonNameAndDataset(String organismName, String dataset, String variantType) {
+        return repository.findByCommonnameContainingIgnoreCaseAndDataset(organismName, dataset).stream()
+                .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<GenotypeRunDTO> findByCommonNameAndDataset(String organismName, String dataset, String variantType, int limit) {
+        if (limit > 0) {
+            Pageable p = PageRequest.of(0, limit);
+            return repository.findByCommonnameContainingIgnoreCaseAndDataset(organismName, dataset, p).stream()
+                    .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                    .map(this::toDTO)
+                    .collect(Collectors.toList());
+        }
+        return findByCommonNameAndDataset(organismName, dataset, variantType);
+    }
+
+    // Use case 2: genotype runs by variantset and dataset
+    public List<GenotypeRunDTO> findByVariantsetAndDataset(String variantset, String dataset, String variantType) {
+        return repository.findByVariantsetAndDataset(variantset, dataset).stream()
+                .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<GenotypeRunDTO> findByVariantsetAndDataset(String variantset, String dataset, String variantType, int limit) {
+        if (limit > 0) {
+            Pageable p = PageRequest.of(0, limit);
+            return repository.findByVariantsetAndDataset(variantset, dataset, p).stream()
+                    .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                    .map(this::toDTO)
+                    .collect(Collectors.toList());
+        }
+        return findByVariantsetAndDataset(variantset, dataset, variantType);
+    }
+
+    // Use case 3: genotype runs by variantset
+    public List<GenotypeRunDTO> findByVariantset(String variantset, String variantType) {
+        return repository.findByVariantsetContainingIgnoreCase(variantset).stream()
+                .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<GenotypeRunDTO> findByVariantset(String variantset, String variantType, int limit) {
+        if (limit > 0) {
+            Pageable p = PageRequest.of(0, limit);
+            return repository.findByVariantsetContainingIgnoreCase(variantset, p).stream()
+                    .filter(r -> variantType == null || variantType.isEmpty() || (r.getVariantType() != null && r.getVariantType().equalsIgnoreCase(variantType)))
+                    .map(this::toDTO)
+                    .collect(Collectors.toList());
+        }
+        return findByVariantset(variantset, variantType);
+    }
+
+    @Transactional
+    public GenotypeRunDTO updateCommonName(Integer genotypeRunId, String newCommonName) {
+        return repository.findById(genotypeRunId).map(r -> {
+            r.setCommonname(newCommonName);
+            VGenotypeRun saved = repository.save(r);
+            return toDTO(saved);
+        }).orElse(null);
     }
 
     private GenotypeRunDTO toDTO(VGenotypeRun e) {

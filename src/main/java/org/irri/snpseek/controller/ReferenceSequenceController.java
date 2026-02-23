@@ -18,41 +18,43 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/reference-sequence")
-@Tag(name = "ReferenceSequence", description = "APIs to query reference sequence (feature) data")
+@Tag(name = "Reference Sequences", description = "API for accessing genomic reference sequences including chromosomes, scaffolds, and contigs for various organisms")
 public class ReferenceSequenceController {
-    private final ReferenceSequenceService referenceSequenceService;
+	private final ReferenceSequenceService referenceSequenceService;
 
-    public ReferenceSequenceController(ReferenceSequenceService referenceSequenceService) {
-        this.referenceSequenceService = referenceSequenceService;
-    }
+	public ReferenceSequenceController(ReferenceSequenceService referenceSequenceService) {
+		this.referenceSequenceService = referenceSequenceService;
+	}
 
-    @GetMapping
-    @Operation(summary = "All reference sequences", description = "Gets list of all reference sequences")
-    public ResponseEntity<List<ReferenceSequenceDTO>> getAll() {
-        return ResponseEntity.ok(referenceSequenceService.getAllReferenceSequences());
-    }
+	@GetMapping
+	@Operation(summary = "All reference sequences", description = "Gets list of all reference sequences")
+	public ResponseEntity<List<ReferenceSequenceDTO>> getAll() {
+		return ResponseEntity.ok(referenceSequenceService.getAllReferenceSequences());
+	}
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Reference sequence by id", description = "Get reference sequence details by feature id")
-    public ResponseEntity<ReferenceSequenceDTO> getById(@Parameter(description = "Feature ID") @PathVariable BigDecimal id) {
-        return ResponseEntity.ok(referenceSequenceService.getById(id));
-    }
+	@GetMapping("/{id}")
+	@Operation(summary = "Reference sequence by id", description = "Get reference sequence details by feature id")
+	public ResponseEntity<ReferenceSequenceDTO> getById(
+			@Parameter(description = "Feature ID") @PathVariable BigDecimal id) {
+		return ResponseEntity.ok(referenceSequenceService.getById(id));
+	}
 
-    @GetMapping("/organism/{organismId}")
-    @Operation(summary = "Reference sequences by organism", description = "Get sequences for a given organism id")
-    public ResponseEntity<List<ReferenceSequenceDTO>> getByOrganism(@PathVariable BigDecimal organismId) {
-        return ResponseEntity.ok(referenceSequenceService.findByOrganismId(organismId));
-    }
-    
-    @GetMapping("/organism/{organismId}/typeName/{type}")
-    @Operation(summary = "Reference sequences by organism and type", description = "Get sequences for a given organism id and type")
-    public ResponseEntity<List<ReferenceSequenceDTO>> getByOrganism(@PathVariable BigDecimal organismId, @PathVariable String type) {
-        return ResponseEntity.ok(referenceSequenceService.findByOrganismIdAndTypeName(organismId, type));
-    }
+	@GetMapping("/organism/{organismId}")
+	@Operation(summary = "Reference sequences by organism", description = "Get sequences for a given organism id")
+	public ResponseEntity<List<ReferenceSequenceDTO>> getByOrganism(@PathVariable BigDecimal organismId) {
+		return ResponseEntity.ok(referenceSequenceService.findByOrganismId(organismId));
+	}
 
-    @GetMapping("/search")
-    @Operation(summary = "Search reference sequences by name", description = "Search sequences by name fragment")
-    public ResponseEntity<List<ReferenceSequenceDTO>> searchByName(@RequestParam String q) {
-        return ResponseEntity.ok(referenceSequenceService.findByNameLike(q));
-    }
+	@GetMapping("/organism/{organismId}/typeName/{type}")
+	@Operation(summary = "Reference sequences by organism and type", description = "Get sequences for a given organism id and type")
+	public ResponseEntity<List<ReferenceSequenceDTO>> getByOrganism(@PathVariable BigDecimal organismId,
+			@PathVariable String type) {
+		return ResponseEntity.ok(referenceSequenceService.findByOrganismIdAndTypeName(organismId, type));
+	}
+
+	@GetMapping("/search")
+	@Operation(summary = "Search reference sequences by name", description = "Search sequences by name fragment")
+	public ResponseEntity<List<ReferenceSequenceDTO>> searchByName(@RequestParam String q) {
+		return ResponseEntity.ok(referenceSequenceService.findByNameLike(q));
+	}
 }
