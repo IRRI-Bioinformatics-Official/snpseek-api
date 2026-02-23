@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.irri.snpseek.DTO.VarietyDTO;
+import org.irri.snpseek.service.VAllstockBasicpropService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,16 +15,24 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/variety")
 @Tag(name = "Variety", description = "API for genotyping experiment runs and variant calling datasets")
 public class VarietyController {
 
+    private final VAllstockBasicpropService allstockService;
+
+    public VarietyController(VAllstockBasicpropService allstockService) {
+        this.allstockService = allstockService;
+    }
+
     @GetMapping
-    @Operation(summary = "All varieties", description = "Get all varieties")
-    public ResponseEntity<List<Object>> getVarietyAll() {
-        return ResponseEntity.ok(Collections.emptyList());
+    @Operation(summary = "All varieties", description = "Get all varieties (supports limit query param)")
+    public ResponseEntity<List<VarietyDTO>> getVarietyAll(@RequestParam(name = "limit", required = false, defaultValue = "0") int limit) {
+        return ResponseEntity.ok(allstockService.findAllVAllstockBasicprops(limit));
     }
 
     @GetMapping("/{id}")
@@ -142,6 +152,20 @@ public class VarietyController {
     @Operation(summary = "Passport data", description = "Get passport data by passport id")
     public ResponseEntity<Map<String, String>> getPassportById(@PathVariable String passid) {
         return ResponseEntity.ok(Collections.emptyMap());
+    }
+
+    @GetMapping("/datasets")
+    @Operation(summary = "Get varieties by datasets", description = "Get varieties that belong to one of the provided datasets (comma-separated). Default dataset=3k if none provided")
+    public ResponseEntity<List<VarietyDTO>> getByDatasets(
+            @RequestParam(name = "datasets", required = false) String datasets,
+            @RequestParam(name = "limit", required = false, defaultValue = "0") int limit) {
+        List<String> dsList;
+        if (datasets == null || datasets.isBlank()) {
+            dsList = Arrays.asList("3k").stream().map(String::toUpperCase).collect(Collectors.toList());
+        } else {
+            dsList = Arrays.stream(datasets.split(",")).map(String::trim).filter(s -> !s.isEmpty()).map(String::toUpperCase).collect(Collectors.toList());
+        }
+        return ResponseEntity.ok(allstockService.findAllByDatasets(dsList, limit));
     }
 
 }

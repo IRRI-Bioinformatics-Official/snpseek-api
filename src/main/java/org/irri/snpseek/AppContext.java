@@ -85,4 +85,8 @@ public class AppContext {
 
 	}
 
+	public static String getDefaultDataset() {
+		return "3k";
+	}
+
 }

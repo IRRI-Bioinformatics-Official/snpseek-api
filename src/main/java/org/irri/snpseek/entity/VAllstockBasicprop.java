@@ -3,11 +3,14 @@ package org.irri.snpseek.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.irri.snpseek.domain.Variety;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
@@ -20,6 +23,7 @@ import jakarta.xml.bind.annotation.XmlType;
  */
 
 @Entity
+@IdClass(VAllstockBasicpropId.class)
 @NamedQueries({
 		@NamedQuery(name = "findAllVAllstockBasicprops", query = "select myVAllstockBasicprop from VAllstockBasicprop myVAllstockBasicprop"),
 		@NamedQuery(name = "findVAllstockBasicpropByBoxCode", query = "select myVAllstockBasicprop from VAllstockBasicprop myVAllstockBasicprop where upper(myVAllstockBasicprop.boxCode) = upper(?1)"),
@@ -73,7 +77,7 @@ import jakarta.xml.bind.annotation.XmlType;
 // @Table(name = "TMP_allStockId_BASICPROP_3024")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = "iric_prod_crud/org/irri/iric/portal/chado/oracle/domain", name = "VAllstockBasicprop")
-public class VAllstockBasicprop implements Serializable{
+public class VAllstockBasicprop implements Serializable, Variety{
 	private static final long serialVersionUID = 1L;
 
 	/**
