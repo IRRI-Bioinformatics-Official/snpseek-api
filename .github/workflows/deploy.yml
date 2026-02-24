@@ -54,6 +54,6 @@ jobs:
 
       - name: Deploy JAR
         run: |
-          mv *.jar /opt/snpseek-api/snpseek-api.jar
+          mv *.jar /opt/snpseek-api/api.jar
           sudo systemctl restart snpseek-api
           sudo systemctl status snpseek-api --no-pager
