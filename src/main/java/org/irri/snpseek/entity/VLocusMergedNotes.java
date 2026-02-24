@@ -45,6 +45,11 @@ public class VLocusMergedNotes  {
 	@Basic(fetch = FetchType.EAGER)
 	@XmlElement
 	String fgenesh;
+	
+	@Id
+	@GeneratedValue
+	@Column(name = "rownum")
+	private Long rownum;
 
 	public String getIRICName() {
 
