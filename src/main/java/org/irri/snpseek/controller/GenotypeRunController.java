@@ -7,8 +7,6 @@ import org.irri.snpseek.service.GenotypeRunService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,9 +39,10 @@ public class GenotypeRunController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/dataset/{dataset}")
+    // Accept both /dataset and /dataset/{dataset} so callers may omit the path variable and rely on default
+    @GetMapping({"/dataset/{dataset}", "/dataset"})
     @Operation(summary = "Genotype runs by dataset", description = "Get genotype runs for a given dataset name (default 3k)")
-    public ResponseEntity<List<GenotypeRunDTO>> getByDataset(@PathVariable(required = false) String dataset,
+    public ResponseEntity<List<GenotypeRunDTO>> getByDataset(@PathVariable(required = false) String dataset ,
             @RequestParam(name = "variantType", required = false, defaultValue = "SNP") String variantType,
             @RequestParam(name = "limit", required = false, defaultValue = "0") int limit) {
         String ds = (dataset == null || dataset.isEmpty()) ? "3k" : dataset;
