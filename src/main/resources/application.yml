@@ -12,7 +12,7 @@ springdoc:
 
 spring:
   application:
-    name: SNPSeek-BrAPI-Server
+    name: SNPSeek-API-Server
   
   # PostgreSQL Configuration
   datasource:
