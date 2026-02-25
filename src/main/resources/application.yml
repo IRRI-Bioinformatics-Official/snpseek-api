@@ -9,7 +9,10 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     url: /ws/api-docs
-    disable-swagger-default-url: true               # ← updated
+    disable-swagger-default-url: true
+  servers:
+    - url: ${APP_PUBLIC_URL}        # ← use env var
+      description: Production Server
 
 spring:
   application:
