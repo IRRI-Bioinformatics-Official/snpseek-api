@@ -7,8 +7,8 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui
-    config-url: /api/api-docs        # ← updated
-    url: /api/api-docs               # ← updated
+    config-url: /ws/api-docs        # ← updated
+    url: /ws/api-docs               # ← updated
 
 spring:
   application:
