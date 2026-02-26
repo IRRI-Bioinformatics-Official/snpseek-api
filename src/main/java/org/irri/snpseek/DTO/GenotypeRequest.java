@@ -13,6 +13,8 @@ public class GenotypeRequest {
     private String subpopulation;
     private String locus;
     private Boolean alignindels;
+    private String datasetAndVariantset; // dataset:variantset pairs
+    private Integer organismId;
     
     public GenotypeRequest() {}
     
@@ -52,4 +54,10 @@ public class GenotypeRequest {
     
     public Boolean getAlignindels() { return alignindels; }
     public void setAlignindels(Boolean alignindels) { this.alignindels = alignindels; }
+
+    public String getSet() { return datasetAndVariantset; }
+    public void setSet(String datasetAndVariantset) { this.datasetAndVariantset = datasetAndVariantset; }
+
+    public Integer getOrganismId() { return organismId; }
+    public void setOrganismId(Integer organismId) { this.organismId = organismId; }
 }

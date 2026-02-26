@@ -2,10 +2,20 @@ package org.irri.snpseek;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.Collections;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AppContext {
 
 	private static Map<String, Integer> mapVariant2Order;
+	private static final Logger logger = Logger.getLogger(AppContext.class.getName());
 
 	public static Integer REFERENCE_NIPPONBARE_ID() {
 		return 9;
@@ -88,5 +98,104 @@ public class AppContext {
 	public static String getDefaultDataset() {
 		return "3k";
 	}
+
+	// ------------------------ New: loading source file from environment variable
+	// ------------------------
+
+	/**
+	 * Resolve the base directory to use when a relative path is provided. Priority:
+	 * APP_SOURCE_DIR env var, then current working dir.
+	 */
+	private static String resolveSourceBaseDir() {
+		String env = System.getenv("APP_SOURCE_DIR");
+		if (env != null && !env.trim().isEmpty())
+			return env.trim();
+		return System.getProperty("user.dir");
+	}
+
+	/**
+	 * Load a file given an absolute path or relative path (relative resolved
+	 * against APP_SOURCE_DIR). Returns file contents as a String. On error returns
+	 * empty string and logs the issue.
+	 *
+	 * @param filePath absolute or relative path
+	 * @return file contents or empty string
+	 */
+	public static String loadSourceFile(String filePath) {
+		if (filePath == null || filePath.trim().isEmpty())
+			return "";
+		Path p = Paths.get(filePath);
+		if (!p.isAbsolute()) {
+			p = Paths.get(resolveSourceBaseDir()).resolve(filePath).normalize();
+		}
+		try {
+			if (!Files.exists(p)) {
+				logger.log(Level.WARNING, "Requested source file does not exist: {0}", p.toString());
+				return "";
+			}
+			return Files.readString(p, StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Error reading source file: " + p.toString(), e);
+			return "";
+		}
+	}
+
+	/**
+	 * Convenience: load file path from environment variable name (e.g.
+	 * APP_SOURCE_FILE) If the environment variable is not set or empty, returns
+	 * empty string.
+	 *
+	 * @param envVarName environment variable containing path
+	 * @return file contents or empty string
+	 */
+	public static String loadSourceFileFromEnv(String envVarName) {
+		if (envVarName == null || envVarName.trim().isEmpty())
+			envVarName = "APP_SOURCE_FILE"; // default
+		String path = System.getenv(envVarName);
+		if (path == null || path.trim().isEmpty()) {
+			logger.log(Level.FINE, "Environment variable {0} is not set or empty", envVarName);
+			return "";
+		}
+		return loadSourceFile(path);
+	}
+
+	/**
+	 * Convenience: read file as list of lines (UTF-8). Returns empty list on error.
+	 */
+	public static List<String> loadSourceFileLines(String filePath) {
+		String content = loadSourceFile(filePath);
+		if (content.isEmpty())
+			return Collections.emptyList();
+		return List.of(content.split("\r?\n"));
+	}
+
+	/**
+	 * Convenience: load the file specified by the default environment variable
+	 * APP_SOURCE_FILE. If not set or unreadable, returns empty string.
+	 */
+	public static String loadSourceFileFromEnv() {
+		return loadSourceFileFromEnv("APP_SOURCE_FILE");
+	}
+
+	/**
+	 * Convenience: get file lines for the file specified by APP_SOURCE_FILE.
+	 * Returns empty list on error.
+	 */
+	public static List<String> loadSourceFileLinesFromEnv() {
+		String content = loadSourceFileFromEnv();
+		if (content.isEmpty())
+			return Collections.emptyList();
+		return List.of(content.split("\r?\n"));
+	}
+
+	public static String getFlatfilesDir() {
+		// Priority order of environment variables and system property
+		String v = System.getenv("FLATFILES_DIR");
+		if (v != null && !v.trim().isEmpty())
+			return v.trim();
+		return "";
+	}
+
+	// -----------------------------------------------------------------------------------------------
 
 }

@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/organism")
 @Tag(name = "Organism", description = "API's to query Organism related data")
 public class OrganismController {
+	
     private final OrganismService organismService;
 
     public OrganismController(OrganismService organismService) {

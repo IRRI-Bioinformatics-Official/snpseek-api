@@ -14,7 +14,7 @@
     
     <groupId>org.irri.snpseek</groupId>
     <artifactId>snpseek-api</artifactId>
-    <version>0.3.3</version>
+    <version>0.4.0</version>
     <name>snpseek API</name>
     <description>Snpseek API Implementation</description>
     
