@@ -29,17 +29,18 @@ jobs:
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw        # ← add this step
 
-      - name: Install local JARs to Maven repo  # ← ADD THIS
+      - name: Install local JARs to Maven repo
         run: |
-          for jar in lib/*.jar; do
-            filename=$(basename "$jar" .jar)
-            ./mvnw install:install-file \
-              -Dfile="$jar" \
-              -DgroupId="local.libs" \
-              -DartifactId="$filename" \
-              -Dversion="1.0" \
-              -Dpackaging="jar"
-          done
+          mvn install:install-file -Dfile=lib/fits-1.0.jar -DgroupId=local.libs -DartifactId=fits -Dversion=1.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarfitsobj-1.0.jar -DgroupId=local.libs -DartifactId=jarfitsobj -Dversion=1.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarh4obj-1.0.jar -DgroupId=local.libs -DartifactId=jarh4obj -Dversion=1.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarh5obj-1.0.jar -DgroupId=local.libs -DartifactId=jarh5obj -Dversion=1.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarhdf-2.11.0.jar -DgroupId=local.libs -DartifactId=jarhdf-2.11 -Dversion=2.11.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarhdf5-2.10.1.jar -DgroupId=local.libs -DartifactId=jarhdf5-2.10 -Dversion=2.10.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarhdf5-2.11.0.jar -DgroupId=local.libs -DartifactId=jarhdf5-2.11 -Dversion=2.11.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarhdfobj-1.0.jar -DgroupId=local.libs -DartifactId=jarhdfobj -Dversion=1.0 -Dpackaging=jar
+          mvn install:install-file -Dfile=lib/jarnc2obj-1.0.jar -DgroupId=local.libs -DartifactId=jarnc2obj -Dversion=1.0 -Dpackaging=jar
+
 
       - name: Build & Test
         run: ./mvnw clean package 
