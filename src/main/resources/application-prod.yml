@@ -11,7 +11,7 @@ springdoc:
     url: /ws/api-docs
     disable-swagger-default-url: true
   servers:
-    - public-url: ${APP_PUBLIC_URL}        # ← use env var
+    - public-url: ${APP_PUBLIC_URL:http://localhost:5556}        # ← use env var
       description: Production Server
 app:
   public-url: ${APP_PUBLIC_URL:http://localhost:5556}  # Default to localhost if not set
