@@ -74,6 +74,61 @@
 	        <artifactId>h2</artifactId>
 	        <scope>test</scope>
 	    </dependency>
+	    
+	   <!-- Local JARs from lib/ folder -->
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>fits</artifactId>
+    <version>1.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarfitsobj</artifactId>
+    <version>1.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarh4obj</artifactId>
+    <version>1.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarh5obj</artifactId>
+    <version>1.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarhdf-2.11</artifactId>
+    <version>2.11.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarhdf5-2.10</artifactId>
+    <version>2.10.1</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarhdf5-2.11</artifactId>
+    <version>2.11.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarhdfobj</artifactId>
+    <version>1.0</version>
+</dependency>
+
+<dependency>
+    <groupId>local.libs</groupId>
+    <artifactId>jarnc2obj</artifactId>
+    <version>1.0</version>
+</dependency>
 	        
     </dependencies>
     
