@@ -29,11 +29,23 @@ jobs:
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw        # ← add this step
 
-      - name: Build & Test
-        run: ./mvnw clean package -DskipTests
+      - name: Install local JARs to Maven repo  # ← ADD THIS
+        run: |
+          for jar in libs/*.jar; do
+            filename=$(basename "$jar" .jar)
+            ./mvnw install:install-file \
+              -Dfile="$jar" \
+              -DgroupId="local.libs" \
+              -DartifactId="$filename" \
+              -Dversion="1.0" \
+              -Dpackaging="jar"
+          done
 
       - name: Build & Test
-        run: ./mvnw clean package -DskipTests
+        run: ./mvnw clean package 
+
+      - name: Build & Test
+        run: ./mvnw clean package 
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
