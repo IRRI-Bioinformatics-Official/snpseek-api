@@ -16,6 +16,7 @@ public class CorsConfig {
                 registry.addMapping("/**")
                     .allowedOrigins(
                         "https://brs-snpseek.duckdns.org",
+                        "https://snpseekv3.duckdns.org",
                         "http://localhost:5555",
                         "http://localhost:3000"   // add any other origins
                     )
