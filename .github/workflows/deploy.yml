@@ -31,7 +31,7 @@ jobs:
 
       - name: Install local JARs to Maven repo  # ← ADD THIS
         run: |
-          for jar in libs/*.jar; do
+          for jar in lib/*.jar; do
             filename=$(basename "$jar" .jar)
             ./mvnw install:install-file \
               -Dfile="$jar" \
