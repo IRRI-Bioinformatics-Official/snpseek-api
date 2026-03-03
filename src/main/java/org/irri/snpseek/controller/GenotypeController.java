@@ -140,6 +140,7 @@ public class GenotypeController {
 			runInfo.put("dataset", r.getDataset());
 			runInfo.put("variantType", r.getVariantType());
 			runInfo.put("organismCommonName", r.getCommonName());
+			runInfo.put("datalocation", r.getDataLocation());
 			@SuppressWarnings("unchecked")
 			java.util.List<Map<String, Object>> genotypeRuns = (java.util.List<Map<String, Object>>) response.computeIfAbsent("genotypeRuns", k -> new java.util.ArrayList<Map<String, Object>>());
 			genotypeRuns.add(runInfo);
