@@ -4,6 +4,8 @@ package org.irri.snpseek.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import org.irri.snpseek.domain.StockSample;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,7 +51,7 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(namespace = "iric_prod_crud/org/irri/iric/portal/chado/postgres/domain", name = "VAllsampleBasicprop")
 
-public class VAllsampleBasicprop implements Serializable {
+public class VAllsampleBasicprop implements Serializable, StockSample {
 
 	public BigDecimal getVarietyId() {
 		return stockId;

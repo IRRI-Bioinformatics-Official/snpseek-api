@@ -16,6 +16,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * V_SCAFFOLDS_ORGANISM
+ * 
+ * This view contains genomic reference sequences such as chromosomes, scaffolds, and contigs for various organisms.4
+ * 
+ * API controller for accessing genomic reference sequences, including chromosomes, scaffolds, and contigs for various organisms.
+ * Provides endpoints to retrieve reference sequences by id, organism, type, and name search.
+ * 
+ * 
+ */
 @RestController
 @RequestMapping("/reference-sequence")
 @Tag(name = "Reference Sequences", description = "API for accessing genomic reference sequences including chromosomes, scaffolds, and contigs for various organisms")

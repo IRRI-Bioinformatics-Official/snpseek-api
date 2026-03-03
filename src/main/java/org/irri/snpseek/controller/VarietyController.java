@@ -18,6 +18,11 @@ import java.util.Map;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * V_ALLSTOCK_BASICPROP view contains basic properties of all varieties, including stock id, variety name, subpopulation, country of origin, and other related information.
+ * 
+ * This controller provides API endpoints to access variety information by id, subpopulation, country, name search, and associated phenotypes and CO terms.
+ */
 @RestController
 @RequestMapping("/variety")
 @Tag(name = "Variety", description = "API for genotyping experiment runs and variant calling datasets")

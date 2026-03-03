@@ -15,6 +15,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * V_GENOTYPE_RUN view contains information about genotyping experiment runs and variant calling datasets, including dataset name, common name of the organism, variant set used, variant type, and other related properties.
+ * 
+ * This controller provides API endpoints to access genotype run information by dataset, organism common name, variant set, and variant type.
+ * 
+ * 
+ **/
 @RestController
 @RequestMapping("/genotypeRun")
 @Tag(name = "GenotypeRuns",  description = "API for genotyping experiment runs and variant calling datasets")

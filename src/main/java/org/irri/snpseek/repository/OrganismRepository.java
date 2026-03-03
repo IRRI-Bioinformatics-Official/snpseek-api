@@ -9,8 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface OrganismRepository extends JpaRepository<Organism, Integer> { 
-	
-	
-	
-  
+    Optional<Organism> findByCommonNameIgnoreCase(String commonName);
+
 }

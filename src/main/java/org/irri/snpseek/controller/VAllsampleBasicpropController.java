@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * V_ALLSAMPLE_BASICPROP view contains basic properties of all samples, including stock sample id, dataset, and other related information. 
+ * 
+ * This controller provides API endpoints to access sample basic properties by dataset and stock sample id.
+ * 
+ * 
+ **/
 @RestController
 @RequestMapping("/samples")
 public class VAllsampleBasicpropController {

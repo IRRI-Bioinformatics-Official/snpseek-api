@@ -9,7 +9,9 @@ import java.util.Set;
 
 import org.irri.snpseek.JSONException;
 import org.irri.snpseek.DTO.GenotypeRequest;
+import org.irri.snpseek.DTO.GenotypeRunDTO;
 import org.irri.snpseek.DTO.SnpRefPosIndex;
+import org.irri.snpseek.service.GenotypeRunService;
 import org.irri.snpseek.service.GenotypeService;
 import org.irri.snpseek.service.OrganismService;
 import org.irri.snpseek.service.SnpFeatureService;
@@ -26,6 +28,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * 
+ * API controller for genotyping experiment runs and variant calling datasets. 
+ * Provides endpoints to retrieve genotype tables based on various parameters, as well as SNP reference position index entries 
+ * for specific loci and variant sets.
+ * 
+ */
 @RestController
 @RequestMapping("/genotype")
 @Tag(name = "Genotype", description = "API for genotyping experiment.")
@@ -34,12 +43,14 @@ public class GenotypeController {
 	private final OrganismService organismDAO;
 	private final GenotypeService genotypeService;
 	private final SnpFeatureService snpFeatureService;
+	private final GenotypeRunService genotypeRunService;
 
 	@Autowired
-	public GenotypeController(OrganismService organismDAO, GenotypeService genotypeService, SnpFeatureService snpFeatureService) {
+	public GenotypeController(OrganismService organismDAO, GenotypeService genotypeService, SnpFeatureService snpFeatureService, GenotypeRunService genotypeRunService) {
 		this.organismDAO = organismDAO;
 		this.genotypeService = genotypeService;
 		this.snpFeatureService = snpFeatureService;
+		this.genotypeRunService = genotypeRunService;
 	}
 	
 	@GetMapping("/gettableGenotype")
@@ -81,6 +92,8 @@ public class GenotypeController {
 		// parse setPair into dataset and variantset sets (format: dataset:variantset, multiple pairs comma-delimited)
 		Set<String> sDataset = new HashSet<>();
 		Set<String> sVSet = new HashSet<>();
+		String selectedDataset = null;
+		String selectedVariantset = null;
 		if (setPair != null && !setPair.trim().isEmpty()) {
 			String[] pairs = setPair.split(",");
 			for (String pair : pairs) {
@@ -90,11 +103,20 @@ public class GenotypeController {
 				if (idx > -1) {
 					String ds = t.substring(0, idx).trim();
 					String vs = t.substring(idx + 1).trim();
-					if (!ds.isEmpty()) sDataset.add(ds);
-					if (!vs.isEmpty()) sVSet.add(vs);
+					if (!ds.isEmpty()) {
+						sDataset.add(ds);
+						if (selectedDataset == null) selectedDataset = ds;
+					}
+					if (!vs.isEmpty()) {
+						sVSet.add(vs);
+						if (selectedVariantset == null) selectedVariantset = vs;
+					}
 				} else {
 					// treat value as dataset only if no colon present
-					if (!t.isEmpty()) sDataset.add(t);
+					if (!t.isEmpty()) {
+						sDataset.add(t);
+						if (selectedDataset == null) selectedDataset = t;
+					}
 				}
 			}
 		}
@@ -102,9 +124,31 @@ public class GenotypeController {
 		params.put("datasetSet", sDataset);
 		params.put("variantsetSet", sVSet);
 
-		response.put("params", params);
-		response.put("rows", Collections.emptyList());
+		
+		
+		// choose first parsed values (fall back to sensible defaults)
+		String datasetToUse = selectedDataset != null ? selectedDataset : (sDataset.isEmpty() ? "3k" : sDataset.iterator().next());
+		String variantsetToUse = selectedVariantset != null ? selectedVariantset : (sVSet.isEmpty() ? "3kfiltered" : sVSet.iterator().next());
+		String variantType = "SNP";
+		int limit = 10;
+		List<GenotypeRunDTO> vrun = genotypeRunService.findByVariantsetAndDataset(variantsetToUse, datasetToUse, variantType, limit); // example service call using parsed values
 
+		vrun.forEach(r -> {
+			Map<String, Object> runInfo = new HashMap<>();
+			runInfo.put("id", r.getGenotypeRunId());
+			runInfo.put("variantset", r.getVariantset());
+			runInfo.put("dataset", r.getDataset());
+			runInfo.put("variantType", r.getVariantType());
+			runInfo.put("organismCommonName", r.getCommonName());
+			@SuppressWarnings("unchecked")
+			java.util.List<Map<String, Object>> genotypeRuns = (java.util.List<Map<String, Object>>) response.computeIfAbsent("genotypeRuns", k -> new java.util.ArrayList<Map<String, Object>>());
+			genotypeRuns.add(runInfo);
+		});
+		
+		response.put("params", params);
+		response.put("rows", vrun.size());
+		
+		
 		return ResponseEntity.ok(response);
 	}
 
@@ -119,6 +163,21 @@ public class GenotypeController {
 			@RequestParam(name = "variantset", required = false, defaultValue = "3kfiltered") String variantset) {
 
 		List<SnpRefPosIndex> rows = snpFeatureService.getSnpRefPosIndex(organismId, srcfeatureId, chromosome, start, end, variantset);
+		return ResponseEntity.ok(rows);
+	}
+
+	@GetMapping("/refposindex-with-prop")
+	@Operation(summary = "SNP reference position index with property", description = "Returns SnpRefPosIndex entries for a locus and variantsets, including property values (e.g. nonsynonymous or splice donor)")
+	public ResponseEntity<List<SnpRefPosIndex>> getRefPosIndexWithProp(
+			@RequestParam(name = "organismId", required = false, defaultValue = "9") Long organismId,
+			@RequestParam(name = "srcfeatureId") Long srcfeatureId,
+			@RequestParam(name = "chromosomeOffset", required = false, defaultValue = "3") Integer chromosomeOffset,
+			@RequestParam(name = "start") Long start,
+			@RequestParam(name = "end") Long end,
+			@RequestParam(name = "variantset", required = false, defaultValue = "3kfiltered") String variantset,
+			@RequestParam(name = "propTypeNames", required = false, defaultValue = "nonsynonymous_variant") String propTypeNamesCsv) {
+
+		List<SnpRefPosIndex> rows = snpFeatureService.getSnpRefPosIndexWithProp(organismId, srcfeatureId, chromosomeOffset, start, end, variantset, propTypeNamesCsv);
 		return ResponseEntity.ok(rows);
 	}
 

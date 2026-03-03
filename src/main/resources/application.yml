@@ -14,7 +14,7 @@ springdoc:
     - public-url: ${APP_PUBLIC_URL:http://localhost:5557}        # ← use env var
       description: Production Server
 app:
-  public-url: ${APP_PUBLIC_URL:http://localhost:5557}  # Default to localhost if not set
+  public-url: ${APP_PUBLIC_URL:http://localhost:5555}  # Default to localhost if not set
 
 spring:
   application:

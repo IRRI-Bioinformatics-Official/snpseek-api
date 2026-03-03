@@ -16,6 +16,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * V_CV_PASSPORT_ALLSTOCKS view contains all controlled vocabulary terms used in germplasm passport data, 
+ * including those for stock attributes, sample attributes, and other related terms. 
+ * 
+ * This controller provides API endpoints to access these terms by dataset, cvTermId, name, and definition.
+ * 
+ * 
+ **/
 @RestController
 @RequestMapping("/passport-attributes")
 @Tag(name = "PassportAttributes", description = "API for controlled vocabulary terms used in germplasm passport data")

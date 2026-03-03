@@ -14,6 +14,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * ORGANISM entity contains information about organisms, including their scientific names, common names, and taxonomic classifications.
+ * 
+ * This controller provides API endpoints to access organism information, including retrieval of all organisms and details by organism id.
+ * 
+ * 
+ */
 @RestController
 @RequestMapping("/organism")
 @Tag(name = "Organism", description = "API's to query Organism related data")

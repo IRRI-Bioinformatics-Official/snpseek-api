@@ -27,4 +27,19 @@ public class SnpFeatureService {
         }
         return snpFeatureRepository.findSnpRefPosIndex(organismId, srcfeatureId, chromosome, startPos, endPos, variantsetNames);
     }
+
+    public List<SnpRefPosIndex> getSnpRefPosIndexWithProp(Long organismId, Long srcfeatureId, Integer chromosomeOffset, Long startPos, Long endPos, String variantsetNamesCsv, String propTypeNamesCsv) {
+        List<String> variantsetNames = Arrays.stream((variantsetNamesCsv == null) ? new String[0] : variantsetNamesCsv.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+        List<String> propTypeNames = Arrays.stream((propTypeNamesCsv == null) ? new String[0] : propTypeNamesCsv.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+        if (variantsetNames.isEmpty() || propTypeNames.isEmpty()) {
+            return List.of();
+        }
+        return snpFeatureRepository.findSnpRefPosIndexWithProp(organismId, srcfeatureId, chromosomeOffset, startPos, endPos, variantsetNames, propTypeNames);
+    }
 }

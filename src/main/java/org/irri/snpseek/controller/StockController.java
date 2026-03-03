@@ -16,6 +16,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * STOCKS entity contains information about stocks, including their stock ids, names, and associated organism ids.
+ * 
+ * This controller provides API endpoints to access stock information, including retrieval of all stocks, details by stock id, and lists by organism id.
+ */
 @RestController
 @RequestMapping("/stocks")
 @Tag(name = "Stock", description = "API's to query Stock related data")

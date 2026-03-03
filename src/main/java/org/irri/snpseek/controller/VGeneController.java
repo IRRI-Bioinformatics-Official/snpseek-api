@@ -11,6 +11,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+/**
+ * 
+ * V_GENE view contains gene annotations and genomic coordinates for various organisms.
+ * 
+ * This controller provides API endpoints to access gene information, including retrieval by id, name search, and filtering by organism.
+ * 
+ * 
+ */
 @RestController
 @RequestMapping("/vgene")
 @Tag(name = "Genes", 
