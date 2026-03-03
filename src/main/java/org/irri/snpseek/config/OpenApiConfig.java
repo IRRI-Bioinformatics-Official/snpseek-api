@@ -28,9 +28,9 @@ public class OpenApiConfig {
 
         Info info = new Info()
                 .title("SNPSeek Rice Genomics API")
-                .version("1.0")
+                .version("1.0.1")
                 .contact(contact)
-                .description("API for querying rice variety, phenotype, genotype, and genomic data");
+                .description(publicUrl+"API for querying rice variety, phenotype, genotype, and genomic data");
 
         return new OpenAPI()
                 .info(info)
