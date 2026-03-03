@@ -21,7 +21,7 @@ public class OpenApiConfig {
     public OpenAPI snpSeekOpenAPI() {
         Server server = new Server();
         server.setUrl(publicUrl);
-        server.setDescription("SNPSeek API Server (BETA)");
+        server.setDescription("SNPSeek API Server v1.0.2");
 
         Contact contact = new Contact();
         contact.setName("SNPSeek Team");
