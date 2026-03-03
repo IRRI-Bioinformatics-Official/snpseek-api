@@ -27,10 +27,10 @@ public class OpenApiConfig {
         contact.setName("SNPSeek Team");
 
         Info info = new Info()
-                .title("SNPSeek Rice Genomics API")
+                .title("SNPSeek Rice Genomics API (BETA)")
                 .version("1.0.1")
                 .contact(contact)
-                .description("API for querying rice variety, phenotype, genotype, and genomic data");
+                .description("API for querying rice variety, phenotype, genotype, and genomic data. This API is currently in BETA and may undergo changes. Please report any issues to the SNPSeek Team.");
 
         return new OpenAPI()
                 .info(info)
