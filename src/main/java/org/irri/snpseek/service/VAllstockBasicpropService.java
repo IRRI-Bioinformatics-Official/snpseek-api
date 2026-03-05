@@ -1,5 +1,6 @@
 package org.irri.snpseek.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,10 @@ public class VAllstockBasicpropService {
 
     public List<VarietyDTO> findAllByDatasets(List<String> datasets) {
         return repository.findAllByDatasets(datasets).stream().map(this::toDTO).collect(Collectors.toList());
+    }
+    
+    public List<VarietyDTO> findAllByDatasetsAndVarietyId(List<String> datasets, BigDecimal varietyId) {
+        return repository.findByDatasetsAndVarietyId(datasets, varietyId).stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public List<VarietyDTO> findAllByDatasets(List<String> datasets, int limit) {

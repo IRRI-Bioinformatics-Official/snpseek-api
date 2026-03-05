@@ -2,7 +2,7 @@ package org.irri.snpseek.h5.object;
 
 import java.math.BigDecimal;
 
-import org.irri.snpseek.domain.genotype.snps.Position;
+import org.irri.snpseek.domain.Position;
 
 /**
  * Container entity for SNP position

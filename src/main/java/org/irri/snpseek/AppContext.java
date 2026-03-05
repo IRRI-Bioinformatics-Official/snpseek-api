@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.irri.snpseek.util.PropertyUtil;
 
 public class AppContext {
 
@@ -190,10 +191,10 @@ public class AppContext {
 
 	public static String getFlatfilesDir() {
 		// Priority order of environment variables and system property
-		String v = System.getenv("FLATFILES_DIR");
-		if (v != null && !v.trim().isEmpty())
-			return v.trim();
-		return "";
+		// Delegate to PropertyUtil which handles system props, env vars, and snpseek.properties
+		String dir = PropertyUtil.getFlatFileDirectory();
+		if (dir == null) return "";
+		return dir;
 	}
 
 	// -----------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-package org.irri.snpseek.domain.genotype.snps;
+package org.irri.snpseek.domain;
 
 import java.math.BigDecimal;
 

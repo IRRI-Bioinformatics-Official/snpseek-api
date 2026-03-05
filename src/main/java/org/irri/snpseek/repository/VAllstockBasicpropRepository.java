@@ -16,6 +16,9 @@ public interface VAllstockBasicpropRepository extends JpaRepository<VAllstockBas
 
     @Query("select v from VAllstockBasicprop v where upper(v.dataset) in :datasets")
     List<VAllstockBasicprop> findAllByDatasets(@Param("datasets") List<String> datasets);
+    
+    @Query("select v from VAllstockBasicprop v where upper(v.dataset) in :datasets and v.allStockIdId = :allStockIdId")
+    List<VAllstockBasicprop> findByDatasetsAndVarietyId(@Param("datasets") List<String> datasets, @Param("allStockIdId") BigDecimal allStockIdId);
 
     @Query("select v from VAllstockBasicprop v where upper(v.dataset) in :datasets")
     Page<VAllstockBasicprop> findAllByDatasets(@Param("datasets") List<String> datasets, Pageable pageable);

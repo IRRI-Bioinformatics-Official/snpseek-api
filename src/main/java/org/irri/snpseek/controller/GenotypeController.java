@@ -131,8 +131,10 @@ public class GenotypeController {
 		String variantsetToUse = selectedVariantset != null ? selectedVariantset : (sVSet.isEmpty() ? "3kfiltered" : sVSet.iterator().next());
 		String variantType = "SNP";
 		int limit = 10;
+		
 		List<GenotypeRunDTO> vrun = genotypeRunService.findByVariantsetAndDataset(variantsetToUse, datasetToUse, variantType, limit); // example service call using parsed values
 
+		
 		vrun.forEach(r -> {
 			Map<String, Object> runInfo = new HashMap<>();
 			runInfo.put("id", r.getGenotypeRunId());
@@ -147,7 +149,7 @@ public class GenotypeController {
 		});
 		
 		response.put("params", params);
-		response.put("rows", vrun.size());
+		response.put("genotypeRuns", vrun.size());
 		
 		
 		return ResponseEntity.ok(response);
