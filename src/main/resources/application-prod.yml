@@ -9,6 +9,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     url: /rest/api-docs
+    configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
   servers:
     - public-url: ${APP_PUBLIC_URL:http://localhost:5556}        # ← use env var
