@@ -16,4 +16,6 @@ public interface VAllsampleBasicpropRepository extends JpaRepository<VAllsampleB
 
     VAllsampleBasicprop findByStockSampleId(BigDecimal stockSampleId);
 
+    List<VAllsampleBasicprop> findByStockSampleIdInAndDatasetInOrderByHdf5Index(List<BigDecimal> stockSampleIds, List<String> datasets);
+
 }

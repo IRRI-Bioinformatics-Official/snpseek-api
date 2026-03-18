@@ -152,6 +152,8 @@ public class GenotypeController {
 		response.put("genotypeRuns", vrun.size());
 		
 		
+		
+		
 		return ResponseEntity.ok(response);
 	}
 

@@ -18,9 +18,9 @@ public class CorsConfig {
                         "https://brs-snpseek.duckdns.org",
                         "https://snpseekv3.duckdns.org",
                         "http://localhost:5555",
+                        "http://localhost:5556",
                         "http://localhost:3000"   // add any other origins
-                    )
-                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    )                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*");
             }
         };

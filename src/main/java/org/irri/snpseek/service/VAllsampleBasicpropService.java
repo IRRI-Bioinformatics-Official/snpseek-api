@@ -1,7 +1,9 @@
 package org.irri.snpseek.service;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.irri.snpseek.DTO.VAllsampleBasicpropDTO;
@@ -26,6 +28,26 @@ public class VAllsampleBasicpropService {
     public VAllsampleBasicpropDTO findByStockSampleId(BigDecimal id) {
         VAllsampleBasicprop e = repo.findByStockSampleId(id);
         return e == null ? null : toDto(e);
+    }
+
+    // New: find by datasets and a list of stockSampleIds
+    public List<VAllsampleBasicpropDTO> findByDatasetsAndSampleIds(List<String> datasets, List<BigDecimal> stockSampleIds) {
+        if (stockSampleIds == null || stockSampleIds.isEmpty()) {
+            return findByDatasets(datasets);
+        }
+        List<VAllsampleBasicprop> rows = repo.findByStockSampleIdInAndDatasetInOrderByHdf5Index(stockSampleIds, datasets);
+        return rows.stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    // New usecase: accept a Set of datasets only, named to match the DAO named query
+    public List<VAllsampleBasicpropDTO> findVAllsampleBasicpropByDatasetIn(Set<String> datasets) {
+        if (datasets == null || datasets.isEmpty()) {
+            return Collections.emptyList();
+        }
+        // repo expects a List; convert Set to List while preserving iteration order
+        List<String> dsList = datasets.stream().collect(Collectors.toList());
+        List<VAllsampleBasicprop> rows = repo.findByDatasetInOrderByHdf5Index(dsList);
+        return rows.stream().map(this::toDto).collect(Collectors.toList());
     }
 
     private VAllsampleBasicpropDTO toDto(VAllsampleBasicprop e) {

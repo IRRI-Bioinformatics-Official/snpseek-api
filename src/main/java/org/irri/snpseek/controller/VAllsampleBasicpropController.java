@@ -2,6 +2,7 @@ package org.irri.snpseek.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import org.irri.snpseek.DTO.VAllsampleBasicpropDTO;
 import org.irri.snpseek.service.VAllsampleBasicpropService;
@@ -39,5 +40,18 @@ public class VAllsampleBasicpropController {
         VAllsampleBasicpropDTO dto = service.findByStockSampleId(id);
         if (dto == null) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(dto);
+    }
+
+    // New: expose the named-query use-case: find by dataset IN and optional stockSampleId IN
+    @GetMapping("/by-datasets-and-ids")
+    public ResponseEntity<List<VAllsampleBasicpropDTO>> getByDatasetsAndIds(@RequestParam(name = "datasets") List<String> datasets,
+                                                                            @RequestParam(name = "stockSampleIds", required = false) List<BigDecimal> stockSampleIds) {
+        return ResponseEntity.ok(service.findByDatasetsAndSampleIds(datasets, stockSampleIds));
+    }
+
+    // New: accept a Set of dataset values only and call the DAO-named-query equivalent
+    @GetMapping("/by-dataset-in")
+    public ResponseEntity<List<VAllsampleBasicpropDTO>> getByDatasetIn(@RequestParam(name = "datasets") Set<String> datasets) {
+        return ResponseEntity.ok(service.findVAllsampleBasicpropByDatasetIn(datasets));
     }
 }
