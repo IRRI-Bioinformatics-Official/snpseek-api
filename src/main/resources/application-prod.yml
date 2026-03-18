@@ -1,7 +1,6 @@
 server:
   port: 5555
-  servlet:
-    context-path: /rest
+  # Removed context-path because Nginx is likely stripping the /rest prefix
   forward-headers-strategy: framework
 
 springdoc:
@@ -19,7 +18,7 @@ springdoc:
       use-pkce-with-authorization-code-grant: true
       scopes: openid
   servers:
-    - public-url: ${APP_PUBLIC_URL:https://brs-snpseek.duckdns.org/rest}
+    - url: ${APP_PUBLIC_URL:https://brs-snpseek.duckdns.org/rest}
       description: Production Server
 
 app:
