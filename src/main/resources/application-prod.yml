@@ -10,6 +10,14 @@ springdoc:
     url: /rest/api-docs
     configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
+    oauth:
+      app-name: SNPSeek API Server
+      realm: snpseek_realm
+      auth-url: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/auth
+      token-url: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/token
+      client-id: snpseek-api-client
+      use-pkce-with-authorization-code-grant: true
+      scopes: openid
   servers:
     - public-url: ${APP_PUBLIC_URL:http://localhost:5555}
       description: Production Server
@@ -41,8 +49,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek
-          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek/protocol/openid-connect/certs
+          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm
+          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/certs
   
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

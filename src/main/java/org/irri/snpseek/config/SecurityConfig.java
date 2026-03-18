@@ -32,23 +32,26 @@ public class SecurityConfig {
 	            .contentSecurityPolicy(csp -> csp.policyDirectives("upgrade-insecure-requests;")) // Minimal CSP to avoid 'Unsafe' errors
 	        )
 	        .authorizeHttpRequests(auth -> auth
-	            // Explicitly allow OPTIONS for preflight
-	            .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-	            // Allow Swagger and API Docs without a token (using wildcards to be prefix-agnostic)
-	            .requestMatchers(
-	            	    "/swagger-ui.html",
-	            	    "/swagger-ui/**",
-	            	    "/rest/swagger-ui/**",        // add this
-	            	    "/v3/api-docs/**",
-	            	    "/rest/v3/api-docs/**",       // add this
-	            	    "/api-docs/**",
-	            	    "/rest/api-docs/**",          // add this
-	            	    "/webjars/**",
-	            	    "/rest/webjars/**"            // add this
-	            	).permitAll()
-	            // Protect your actual data and any other endpoint
-	            .anyRequest().authenticated()
-	        )
+	        	    // Allow OPTIONS preflight
+	        	    .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+	        	    // Allow Swagger and API Docs without a token
+	        	    .requestMatchers(
+	        	        "/swagger-ui.html",
+	        	        "/swagger-ui",
+	        	        "/swagger-ui/",
+	        	        "/swagger-ui/**",
+	        	        "/v3/api-docs",
+	        	        "/v3/api-docs/**",
+	        	        "/api-docs",
+	        	        "/api-docs/**",
+	        	        "/swagger-resources",
+	        	        "/swagger-resources/**",
+	        	        "/webjars/**",
+	        	        "/configuration/ui",
+	        	        "/configuration/security"
+	        	    ).permitAll()
+	        	    .anyRequest().authenticated()
+	        	)
 	        .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
 	    return http.build();
 	}
