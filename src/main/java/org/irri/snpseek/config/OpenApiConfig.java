@@ -23,49 +23,52 @@ public class OpenApiConfig {
 	 @Value("${app.public-url}")
 	 private String publicUrl;
 
+    @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri}")
+    private String issuerUri;
+
     @Bean
     public OpenAPI snpSeekOpenAPI() {
-        final String bearerAuth = "bearerAuth";
-        final String oauth2Auth = "keycloakAuth";
+    final String bearerAuth = "bearerAuth";
+    final String oauth2Auth = "keycloakAuth";
 
-        Server server = new Server();
-        server.setUrl(publicUrl);
-        server.setDescription("SNPSeek API Server v1.0.2");
+    Server server = new Server();
+    server.setUrl(publicUrl);
+    server.setDescription("SNPSeek API Server v1.0.2");
 
-        Contact contact = new Contact();
-        contact.setName("SNPSeek Team");
+    Contact contact = new Contact();
+    contact.setName("SNPSeek Team");
 
-        Info info = new Info()
-                .title("SNPSeek Rice Genomics API (BETA)")
-                .version("1.0.2")
-                .contact(contact)
-                .description("API for querying rice variety, phenotype, genotype, and genomic data. This API is currently in BETA and may undergo changes. Please report any issues to the SNPSeek Team.");
+    Info info = new Info()
+    .title("SNPSeek Rice Genomics API (BETA)")
+    .version("1.0.2")
+    .contact(contact)
+    .description("API for querying rice variety, phenotype, genotype, and genomic data. This API is currently in BETA and may undergo changes. Please report any issues to the SNPSeek Team.");
 
-        // Keycloak endpoints
-        String keycloakBaseUrl = "https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect";
+    // Keycloak endpoints derived from issuer-uri
+    String keycloakBaseUrl = issuerUri + "/protocol/openid-connect";
 
-        return new OpenAPI()
-                .info(info)
-                .servers(List.of(server))
-                .addSecurityItem(new SecurityRequirement().addList(bearerAuth))
-                .addSecurityItem(new SecurityRequirement().addList(oauth2Auth))
-                .components(new Components()
-                    .addSecuritySchemes(bearerAuth,
-                        new SecurityScheme()
-                            .name(bearerAuth)
-                            .type(SecurityScheme.Type.HTTP)
-                            .scheme("bearer")
-                            .bearerFormat("JWT"))
-                    .addSecuritySchemes(oauth2Auth,
-                        new SecurityScheme()
-                            .type(SecurityScheme.Type.OAUTH2)
-                            .description("Keycloak OAuth2 Flow")
-                            .flows(new OAuthFlows()
-                                .authorizationCode(new OAuthFlow()
-                                    .authorizationUrl(keycloakBaseUrl + "/auth")
-                                    .tokenUrl(keycloakBaseUrl + "/token")
-                                    .scopes(new Scopes().addString("openid", "standard openid scope"))
-                                )))
-                );
+    return new OpenAPI()
+    .info(info)
+    .servers(List.of(server))
+    .addSecurityItem(new SecurityRequirement().addList(bearerAuth))
+    .addSecurityItem(new SecurityRequirement().addList(oauth2Auth))
+    .components(new Components()
+    .addSecuritySchemes(bearerAuth,
+    new SecurityScheme()
+    .name(bearerAuth)
+    .type(SecurityScheme.Type.HTTP)
+    .scheme("bearer")
+    .bearerFormat("JWT"))
+    .addSecuritySchemes(oauth2Auth,
+    new SecurityScheme()
+    .type(SecurityScheme.Type.OAUTH2)
+    .description("Keycloak OAuth2 Flow")
+    .flows(new OAuthFlows()
+    .authorizationCode(new OAuthFlow()
+    .authorizationUrl(keycloakBaseUrl + "/auth")
+    .tokenUrl(keycloakBaseUrl + "/token")
+    .scopes(new Scopes().addString("openid", "standard openid scope"))
+    )))
+    );
     }
 }
