@@ -36,21 +36,16 @@ public class SecurityConfig {
 	            .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
 	            // Allow Swagger and API Docs without a token (using wildcards to be prefix-agnostic)
 	            .requestMatchers(
-	                "/swagger-ui.html",
-	                "/**/swagger-ui.html",
-	                "/swagger-ui/**", 
-	                "/**/swagger-ui/**",
-	                "/v3/api-docs/**", 
-	                "/**/v3/api-docs/**",
-	                "/api-docs/**", 
-	                "/**/api-docs/**",
-	                "/swagger-resources/**", 
-	                "/**/swagger-resources/**",
-	                "/webjars/**",
-	                "/**/webjars/**",
-	                "/configuration/ui",
-	                "/configuration/security"
-	            ).permitAll()
+	            	    "/swagger-ui.html",
+	            	    "/swagger-ui/**",
+	            	    "/rest/swagger-ui/**",        // add this
+	            	    "/v3/api-docs/**",
+	            	    "/rest/v3/api-docs/**",       // add this
+	            	    "/api-docs/**",
+	            	    "/rest/api-docs/**",          // add this
+	            	    "/webjars/**",
+	            	    "/rest/webjars/**"            // add this
+	            	).permitAll()
 	            // Protect your actual data and any other endpoint
 	            .anyRequest().authenticated()
 	        )
