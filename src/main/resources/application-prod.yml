@@ -8,6 +8,8 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui
+    url: /rest/api-docs
+    configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
     oauth:
       app-name: SNPSeek API Server
