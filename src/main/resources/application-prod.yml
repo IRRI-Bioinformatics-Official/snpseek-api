@@ -11,6 +11,7 @@ springdoc:
     url: /rest/api-docs
     configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
+    display-request-duration: true
     oauth:
       app-name: SNPSeek API Server
       realm: snpseek_realm
