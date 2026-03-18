@@ -12,6 +12,7 @@ springdoc:
     configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
     display-request-duration: true
+    oauth2-redirect-url: 	https://brs-snpseek.duckdns.org/rest/swagger-ui/oauth2-redirect.html
     oauth:
       app-name: SNPSeek API Server
       realm: snpseek_realm
