@@ -7,14 +7,14 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui
-    url: /api-docs
-    configUrl: /api-docs/swagger-config
+    url: /rest/api-docs
+    configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
   servers:
-    - public-url: ${APP_PUBLIC_URL:http://localhost:5555}        # ← use env var
+    - public-url: ${APP_PUBLIC_URL:http://localhost:5556}        # ← use env var
       description: Production Server
 app:
-  public-url: ${APP_PUBLIC_URL:http://localhost:5555}  # Default to localhost if not set
+  public-url: ${APP_PUBLIC_URL:http://localhost:5556}  # Default to localhost if not set
 
 spring:
   application:
@@ -34,16 +34,6 @@ spring:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
-# SECURITY CONFIG (Ready for Keycloak)
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          # The URL of your new Keycloak Realm
-          # Note: Replace 'snpseek' with the Realm Name you created in Keycloak
-          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek
-          # This ensures Spring verifies the "iss" claim in the token
-          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek/protocol/openid-connect/certs
   
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -62,18 +52,7 @@ spring:
   # h2:
   #   console:
   #     enabled: true
-bucket4j:
-  methods:
-    - filter-order: 1
-      execute-condition: "true"
-      cache-name: buckets
-      rate-limit:
-        - bandwidths:
-          - capacity: 5
-            time: 1
-            unit: minutes
-            strategy: first
-            key-source: IP
+
 logging:
   level:
     org.springframework.web: INFO

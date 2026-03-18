@@ -1,0 +1,60 @@
+server:
+  port: 5555
+  forward-headers-strategy: framework
+
+app:
+  public-url: ${APP_PUBLIC_URL:http://localhost:5556}  # Default to localhost if not set
+
+spring:
+  application:
+    name: SNPSeek-API-Server
+  
+  # PostgreSQL Configuration
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  # SECURITY CONFIG (Ready for Keycloak)
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # The URL of your new Keycloak Realm
+          # Note: Replace 'snpseek' with the Realm Name you created in Keycloak
+          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/master
+          # This ensures Spring verifies the "iss" claim in the token
+          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek/protocol/openid-connect/certs
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    url: /api-docs
+    disable-swagger-default-url: true
+  servers:
+    - url: ${APP_PUBLIC_URL:http://localhost:5555}
+      description: Production Server
+
+bucket4j:
+  methods:
+    - filter-order: 1
+      execute-condition: "true"
+      cache-name: buckets
+      rate-limit:
+        - bandwidths:
+          - capacity: 5
+            time: 1
+            unit: minutes
+          strategy: first
+          key-source: IP
+
+logging:
+  level:
+    org.springframework.security: DEBUG # Added to help you debug login issues later
+    org.irri.snpseek: DEBUG

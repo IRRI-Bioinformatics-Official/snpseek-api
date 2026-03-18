@@ -36,14 +36,16 @@ public class SecurityConfig {
 	                "/v3/api-docs",
 	                "/v3/api-docs/**", 
 	                "/api-docs",
-	                "/api-docs/**", 
-	                "/rest/swagger-ui",
+	                "/api-docs/**",
+	                "/rest/swagger-ui.html",
 	                "/rest/swagger-ui/**",
-	                "/rest/api-docs",
 	                "/rest/api-docs/**",
+	                "/rest/v3/api-docs/**",
 	                "/swagger-resources",
 	                "/swagger-resources/**", 
-	                "/webjars/**"
+	                "/webjars/**",
+	                "/configuration/ui",
+	                "/configuration/security"
 	            ).permitAll()	            // Protect your actual data and any other endpoint
 	            .anyRequest().authenticated()
 	        )
