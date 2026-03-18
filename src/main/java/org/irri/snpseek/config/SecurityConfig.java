@@ -27,26 +27,31 @@ public class SecurityConfig {
 	    http
 	        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 	        .csrf(csrf -> csrf.disable())
+	        .headers(headers -> headers
+	            .frameOptions(frame -> frame.sameOrigin()) // Allow same-origin framing for Swagger UI
+	            .contentSecurityPolicy(csp -> csp.policyDirectives("upgrade-insecure-requests;")) // Minimal CSP to avoid 'Unsafe' errors
+	        )
 	        .authorizeHttpRequests(auth -> auth
-	            // Allow Swagger and API Docs without a token
+	            // Explicitly allow OPTIONS for preflight
+	            .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
+	            // Allow Swagger and API Docs without a token (using wildcards to be prefix-agnostic)
 	            .requestMatchers(
 	                "/swagger-ui.html",
-	                "/swagger-ui",
+	                "/**/swagger-ui.html",
 	                "/swagger-ui/**", 
-	                "/v3/api-docs",
+	                "/**/swagger-ui/**",
 	                "/v3/api-docs/**", 
-	                "/api-docs",
-	                "/api-docs/**",
-	                "/rest/swagger-ui.html",
-	                "/rest/swagger-ui/**",
-	                "/rest/api-docs/**",
-	                "/rest/v3/api-docs/**",
-	                "/swagger-resources",
+	                "/**/v3/api-docs/**",
+	                "/api-docs/**", 
+	                "/**/api-docs/**",
 	                "/swagger-resources/**", 
+	                "/**/swagger-resources/**",
 	                "/webjars/**",
+	                "/**/webjars/**",
 	                "/configuration/ui",
 	                "/configuration/security"
-	            ).permitAll()	            // Protect your actual data and any other endpoint
+	            ).permitAll()
+	            // Protect your actual data and any other endpoint
 	            .anyRequest().authenticated()
 	        )
 	        .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
