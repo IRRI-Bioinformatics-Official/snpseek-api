@@ -10,6 +10,15 @@ springdoc:
     url: /api-docs
     configUrl: /api-docs/swagger-config
     disable-swagger-default-url: true
+    oauth:
+      app-name: SNPSeek API Server
+      realm: snpseek_realm
+      auth-url: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/auth
+      token-url: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/token
+      client-id: snpseek-api-client
+      use-pkce-with-authorization-code-grant: true
+      scopes: openid
+
   servers:
     - public-url: ${APP_PUBLIC_URL:http://localhost:5555}        # ← use env var
       description: Production Server
@@ -41,9 +50,9 @@ spring:
         jwt:
           # The URL of your new Keycloak Realm
           # Note: Replace 'snpseek' with the Realm Name you created in Keycloak
-          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek
+          issuer-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm
           # This ensures Spring verifies the "iss" claim in the token
-          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek/protocol/openid-connect/certs
+          jwk-set-uri: https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect/certs
   
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

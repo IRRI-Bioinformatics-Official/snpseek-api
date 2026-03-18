@@ -42,7 +42,7 @@ public class OpenApiConfig {
                 .description("API for querying rice variety, phenotype, genotype, and genomic data. This API is currently in BETA and may undergo changes. Please report any issues to the SNPSeek Team.");
 
         // Keycloak endpoints
-        String keycloakBaseUrl = "https://brs-snpseek.duckdns.org/auth/realms/snpseek/protocol/openid-connect";
+        String keycloakBaseUrl = "https://brs-snpseek.duckdns.org/auth/realms/snpseek_realm/protocol/openid-connect";
 
         return new OpenAPI()
                 .info(info)
