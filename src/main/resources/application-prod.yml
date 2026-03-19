@@ -1,7 +1,7 @@
 server:
   port: 5555
-  # Removed context-path because Nginx is likely stripping the /rest prefix
-  forward-headers-strategy: native
+  # Using framework strategy to correctly handle X-Forwarded-Prefix from Nginx
+  forward-headers-strategy: framework
 
 springdoc:
   api-docs:
@@ -12,6 +12,7 @@ springdoc:
     configUrl: /rest/api-docs/swagger-config
     disable-swagger-default-url: true
     display-request-duration: true
+    # This must match the external URL exactly
     oauth2-redirect-url: https://brs-snpseek.duckdns.org/rest/swagger-ui/oauth2-redirect.html
     oauth:
       app-name: SNPSeek API Server
